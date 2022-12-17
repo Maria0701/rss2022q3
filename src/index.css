@@ -47,7 +47,8 @@ body {
   background: var(--white);
 }
 
-main {
+main,
+#root {
   display: flex;
   flex-direction: column;
   flex-grow: 1;

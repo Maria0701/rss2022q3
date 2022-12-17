@@ -6,10 +6,12 @@ import {Route, Routes} from 'react-router-dom'
 function App() {
   return (
     <>
+    <main>
       <Routes>
         <Route path='/' element={<CatalogPage />} />
         <Route path='/product' element={<ProductPage />} />
       </Routes>
+      </main>
     </>
   )
 };

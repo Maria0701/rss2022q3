@@ -27,6 +27,7 @@ input::-webkit-inner-spin-button {
   --gray: #818181;
   --gray-dark:#222222;
   --padding: 15px;
+  --grey: #F7F7F7;
 }
 
 body {

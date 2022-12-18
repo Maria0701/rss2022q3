@@ -8,7 +8,7 @@ interface ICart {
 
 export function ShoppingCart({styleCart} : ICart) {
   return (
-    <Link to='/' className={`img__cart ${styleCart}`}>
+    <Link to='/' className={`small-cart ${styleCart}`}>
       <img src={cart} alt="cart"/>
     </Link>
   )

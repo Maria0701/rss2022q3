@@ -4,13 +4,13 @@ import { NavHeader } from '../navHeader/NavHeader'
 import { SearchHeader } from '../search/searchHeader'
 export function Header() {
   return (
-    <div className="header">
+    <header className="header">
       <div className="container header__container">
         <Logo eltClass='header__logo'/>
         <NavHeader styleNav='header__navigation'/>
         <SearchHeader styleSearch='header__search'/>
         <div>cart</div>
       </div>
-    </div>
+    </header>
   )
 }

@@ -2,6 +2,8 @@ import './header.css'
 import { Logo } from '../logo/Logo'
 import { NavHeader } from '../navHeader/NavHeader'
 import { SearchHeader } from '../search/searchHeader'
+import { ShoppingCart } from '../shoppingCart/ShoppingCart'
+
 export function Header() {
   return (
     <div className="header">
@@ -9,7 +11,7 @@ export function Header() {
         <Logo eltClass='header__logo'/>
         <NavHeader styleNav='header__navigation'/>
         <SearchHeader styleSearch='header__search'/>
-        <div>cart</div>
+        <ShoppingCart styleCart="header__cart"/>
       </div>
     </div>
   )

@@ -9,6 +9,12 @@
 .header__logo {
   margin-top: 12px;
 }
+
+.header__navigation {
+  margin-top: 5px;
+}
+
 .header__search {
+  width: 210px;
   margin-top: 22px;
 }

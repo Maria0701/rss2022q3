@@ -1,0 +1,14 @@
+.logos {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+}
+
+.logos__item {
+    transition: opacity 0.3s ease-in-out;
+}
+
+.logos__item:hover,
+.logos__item:focus {
+    opacity: 0.9;
+}

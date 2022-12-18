@@ -6,13 +6,13 @@ import { ShoppingCart } from '../shoppingCart/ShoppingCart'
 
 export function Header() {
   return (
-    <div className="header">
+    <header className="header">
       <div className="container header__container">
         <Logo eltClass='header__logo'/>
         <NavHeader styleNav='header__navigation'/>
         <SearchHeader styleSearch='header__search'/>
         <ShoppingCart styleCart="header__cart"/>
       </div>
-    </div>
+    </header>
   )
 }

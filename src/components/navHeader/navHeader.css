@@ -1,0 +1,15 @@
+.navigation {
+  width: 700px;
+}
+.header__nav {
+  display: flex;
+  justify-content: space-between;
+}
+.header__nav li{
+  list-style-type: none;
+  color: #0044a0;
+  cursor: pointer;
+}
+.header__nav li:hover {
+  color: #f3ab03;
+}

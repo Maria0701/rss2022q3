@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import './logo.css'
 
+
 interface ILogo {
   eltClass: string
 }

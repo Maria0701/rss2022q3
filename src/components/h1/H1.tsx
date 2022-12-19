@@ -1,5 +1,10 @@
-export function H1 () {
+import './h1.css'
+interface ISearch {
+  eltClass: string
+}
+
+export function H1Elt({eltClass}: ISearch) {
   return (
-    <div>H1</div>
+    <h1 className={`h1 ${eltClass}`}>Платья</h1>
   )
 }

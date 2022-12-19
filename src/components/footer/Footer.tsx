@@ -1,7 +1,6 @@
 import './footer.css'
 import { Logo } from '../logo/Logo'
-import { LINKS_FOR_FOOTER } from '../../jsons/links' 
-import { ILinks } from '../../models/models'
+import { LINKS_FOR_FOOTER } from '../../jsons/links'
 import { FooterLogos } from '../footerLogos/FooterLogos'
 
 export function Footer() {

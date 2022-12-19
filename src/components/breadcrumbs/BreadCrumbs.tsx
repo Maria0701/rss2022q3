@@ -1,17 +1,16 @@
 import './breadcrumbs.css'
-import { IBread } from '../../models/models'
-import { Link } from 'react-router-dom';
+import { IBread } from '../../models/models';
 import { BreadCrumb } from './BreadCrumb';
 
-interface IBreabcrumbsLogos {
+interface IBreabcrumbs {
   links: IBread[]
 }
 
-export function BreadCrumbs ({links}: IBreabcrumbsLogos) {
+export function BreadCrumbs ({links}: IBreabcrumbs) {
   return (
       <ul className="breadcrumb">
         {links?.map((link, id) => (
-          <BreadCrumb link={link} id={id} />
+          <BreadCrumb link={link} key={id}  />
         ))}
     </ul>
   )

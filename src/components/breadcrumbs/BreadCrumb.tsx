@@ -3,12 +3,11 @@ import { Link } from 'react-router-dom';
 
 interface IBreabcrumbsItem {
   link: IBread;
-  id: number
 }
 
-export function BreadCrumb({link, id}: IBreabcrumbsItem) {
+export function BreadCrumb({link}: IBreabcrumbsItem) {
   return (
-    <li className="breadcrumb__item" key={id}>
+    <li className="breadcrumb__item">
         <Link to={link.link} className="breadcrumb__link" >
             <span>{link.name}</span>
         </Link>

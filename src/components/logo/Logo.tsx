@@ -8,7 +8,7 @@ interface ILogo {
 export function Logo({eltClass}: ILogo) {
   return (
     <Link to='/' className={`logo ${eltClass}`}>
-      <img src={logo} alt="logo" />
+      <img src={process.env.PUBLIC_URL + '/img/header_logo.png'} title='' />
     </Link>
   )
-}
+};

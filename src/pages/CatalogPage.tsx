@@ -7,19 +7,24 @@ import { Sorting } from "../components/sorting/Sorting";
 import { Tags } from "../components/tags/Tags";
 import { Catalog } from "../components/catalog/Catalog";
 import { Pagination } from "../components/pagination/Pagination";
+import { BREADCRUMBS_LINKS } from "../jsons/links";
 
 
 export function CatalogPage() {
     return (
-    <div className="container">
-      <Container/>
-      <BreadCrumbs/>
-      <H1/>
-      <Filters/>
-      <Sorting/>
-      <Tags/>
-      <Catalog/>
-      <Pagination/>
-    </div>
+    <>
+      <div className="container catalog__container">
+        <Container/>
+        <BreadCrumbs links={BREADCRUMBS_LINKS}/>
+      </div>
+      <div className="container catalog__container">
+        <H1/>
+        <Filters/>
+        <Sorting/>
+        <Tags/>
+        <Catalog/>
+        <Pagination/>
+      </div>
+    </>
     );
 };

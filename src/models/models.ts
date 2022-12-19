@@ -3,3 +3,8 @@ export interface ILinks {
     link: string
     img: string
 }
+
+export interface IBread {
+    name: string
+    link: string
+}

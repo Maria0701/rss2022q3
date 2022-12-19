@@ -1,5 +1,11 @@
 .logo {
+  display: flex;
+  align-items: center;
   width: 138px;
   height: 60px;
+}
+
+.logo img {
+  width: 100%;
 }
 

@@ -2,12 +2,12 @@ export const LINKS_FOR_FOOTER = [
     {
         name: 'Maria0701',
         link: 'https://github.com/Maria0701/',
-        img: '/img/github.svg'
+        img: '/img/github.png'
     },
     {
-        name: 'Maria0701',
+        name: 'Valery Ryzhkou',
         link: 'https://github.com/ValeryRyzhkou',
-        img: '/img/github.svg'
+        img: '/img/github.png'
     },
     {
         name: 'RSS School',

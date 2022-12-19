@@ -11,7 +11,9 @@ export function FooterLogos({logos, eltClass}: IFooterLogos) {
   return (
     <div className={`logos ${eltClass}`}>
           { logos?.map((user, id) => (
-            <a className="logos__item" href={user.link} title={user.name} key={id}><img src={process.env.PUBLIC_URL + user.img} title={user.name}  /></a>
+            <a className="logos__item" href={user.link} title={user.name} key={id}>
+              <img src={process.env.PUBLIC_URL + user.img} title={user.name} />
+            </a>
           ))}
     </div>
   )

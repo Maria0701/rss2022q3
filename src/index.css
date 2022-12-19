@@ -21,13 +21,11 @@ input::-webkit-inner-spin-button {
 :root {
   --white: #ffffff;
   --text-color: #000000;
-  --green: #99CB38;
-  --yellow: #FBD846;
-  --footer: #333333;
-  --gray: #818181;
   --gray-dark:#222222;
   --padding: 15px;
   --grey: #F7F7F7;
+  --grey-darker: #AFAFAF;
+  --grey2: #333333;
 }
 
 body {

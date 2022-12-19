@@ -5,10 +5,16 @@
 }
 
 .logos__item {
+    height: 30px;
     transition: opacity 0.3s ease-in-out;
+}
+
+.logos__item img {
+    height: 100%;
+    width: auto;
 }
 
 .logos__item:hover,
 .logos__item:focus {
-    opacity: 0.9;
+    opacity: 0.7;
 }

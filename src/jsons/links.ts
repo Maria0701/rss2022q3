@@ -15,3 +15,10 @@ export const LINKS_FOR_FOOTER = [
         img: '/img/logo.png'
     }
 ];
+
+export const BREADCRUMBS_LINKS = [
+    {
+      name: 'Home',
+      link: '/',
+    },
+  ];

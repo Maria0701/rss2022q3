@@ -19,7 +19,6 @@ export function ProductCard ({product}: IProductProps) {
         <div className="product-card__rating">Rate: <span >{product.rating.rate}</span></div>
         <p  className="product-card__name">{product.title}</p>
         <span className="product-card__price">{product.price}$</span>
-
         <Btn eltClass={btnClassName} onClick={() => setDetails(prev => !prev)} btnText={details ? 'Hide details': "Show details"}/>
       </div>
       { details && 

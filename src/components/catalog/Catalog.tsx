@@ -11,7 +11,7 @@ export function Catalog({eltClass}: ICatalogBlock) {
   return (
     <div className={`catalog-block ${eltClass}`}>
       {
-        PRODUCTS?.map((product, id) => (
+        PRODUCTS?.map((product) => (
           <ProductCard product={product} key={product.id}/>
         ))
       }

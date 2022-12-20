@@ -24,7 +24,6 @@ export function ProductCard ({product}: IProductProps) {
       { details && 
         <div className="product-card__description">
             <div>{product.description}</div>
-            
         </div>
       }
     </div>

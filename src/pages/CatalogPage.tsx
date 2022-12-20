@@ -24,7 +24,7 @@ export function CatalogPage() {
           <div className="catalog__top">
             <Sorting/>
             <Tags/>
-          </div>          
+          </div>
           <Catalog eltClass="catalog__catalog" />
           <Pagination/>
         </div>

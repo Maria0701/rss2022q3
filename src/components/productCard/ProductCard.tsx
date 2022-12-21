@@ -2,6 +2,7 @@ import { useState } from "react"
 import { IProductCard } from "../../models/models"
 import { Btn } from "../btns/btn"
 import './productCard.css'
+import { AddProductToCart } from "../addProductToCart/AddProductToCart"
 
 interface IProductProps {
   product: IProductCard
@@ -27,6 +28,7 @@ export function ProductCard ({product}: IProductProps) {
             
         </div>
       }
+      <AddProductToCart/>
     </div>
 
   )

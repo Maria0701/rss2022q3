@@ -1,0 +1,20 @@
+/* .productToCart {
+  width: 80%;
+  height: 100px;
+  border-radius: 5px solid red;
+} */
+
+/* .btn__addToCart {
+  width: 140px;
+} */
+
+.productToCart {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.blockBtn {
+  background: rgb(99, 93, 93);
+}
+

@@ -8,17 +8,19 @@ export function AddProductToCart () {
 
   const decreaseCount = (): void => {
     setCount((el) => el > 0 ? el -= 1 : 0)
-  }
+  };
 
   const increaseCount = (): void => {
     setCount((el) => el += 1)
-  }
-  const blockBtn = count ? '' : "blockBtn"
-  const styleBtn = ['btn__addToCart', blockBtn]
+  };
+
+  const isDisabled:boolean = count ? false : true;
+  const styleBtn = 'btn__addToCart';
+
   return (
-    <div className="productToCart">
-      <CountOfProduct count = {count} decreaseCount = {decreaseCount} increaseCount ={increaseCount}/>
-      <Btn eltClass={styleBtn.join(' ')} btnText='В корзину' />
+    <div className="product__actions">
+      <CountOfProduct count={count} decreaseCount={decreaseCount} increaseCount={increaseCount}/>
+      <Btn eltClass={styleBtn} btnText='В корзину' isDisabled={isDisabled}/>
     </div>
   )
 }

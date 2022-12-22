@@ -1,0 +1,21 @@
+.product__count{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding: 12px;
+  cursor: pointer;
+  text-align: center;
+  background: var(--white);
+  border: 1px solid rgba(51, 51, 51, 0.1);
+  border-radius: 8px;
+}
+
+.product__count-input {
+  width: 18px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1;
+  text-align: center;
+  letter-spacing: 0.02em;
+  color: var(--blue);
+  border: 0;
+}

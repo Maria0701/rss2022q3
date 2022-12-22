@@ -1,20 +1,10 @@
-/* .productToCart {
-  width: 80%;
-  height: 100px;
-  border-radius: 5px solid red;
-} */
-
-/* .btn__addToCart {
-  width: 140px;
-} */
-
-.productToCart {
-  margin-top: 10px;
-  display: flex;
-  justify-content: space-between;
+.product__actions {
+  display: grid;
+  grid-template-columns: 30% minmax(0, 1fr);
+  column-gap: 14px;
   align-items: center;
+  
 }
-.blockBtn {
-  background: rgb(99, 93, 93);
-}
+
+
 

@@ -46,6 +46,7 @@
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  padding-bottom: 8px;
 }
 
 .product-card__price {
@@ -72,15 +73,4 @@
   border-right: 1px solid rgba(51, 51, 51, 0.1);
 }
 
-.btn--main {
-  padding: 12px 36px;
-  color: var(--white);
-  background: var(--btn-liner);
-  border-radius: 8px;
-  border: 0;
-}
-
-.add-yellow{
-  background: rgb(188, 188, 82);
-}
 

@@ -27,7 +27,8 @@ input::-webkit-inner-spin-button {
   --grey-darker: #AFAFAF;
   --grey2: #333333;
   --gray-100: #19191D;
-  --btn-liner: linear-gradient(180deg, #0044A4 0%, #00347E 100%);
+  --blue: #0044A4;
+  --btn-liner: linear-gradient(180deg, var(--blue) 0%, #00347E 100%);
 }
 
 body {

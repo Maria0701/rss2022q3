@@ -1,0 +1,32 @@
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+}
+
+.btn--main {
+    padding: 12px 20px;
+    color: var(--white);
+    background: var(--btn-liner);
+    border-radius: 8px;
+    border: 0;
+}
+
+.btn--main:disabled {
+  background: var(--grey2);
+}
+  
+.btn--add {
+  width: 18px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.add-yellow{
+  background: rgb(188, 188, 82);
+}

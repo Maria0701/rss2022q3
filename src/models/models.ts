@@ -36,3 +36,10 @@ export interface IProduct {
   thumbnail: string;
   images: string[];
 }
+
+export interface ICategories {
+  products: string[];
+  _id: string;
+  name: string;
+  slug: string;
+}

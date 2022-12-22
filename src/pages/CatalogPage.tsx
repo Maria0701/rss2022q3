@@ -7,7 +7,7 @@ import { Sorting } from "../components/sorting/Sorting";
 import { Tags } from "../components/tags/Tags";
 import { Catalog } from "../components/catalog/Catalog";
 import { Pagination } from "../components/pagination/Pagination";
-import { BREADCRUMBS_LINKS } from "../jsons/links";
+import { BREADCRUMBS_LINKS, CATEGORIES } from "../jsons/links";
 import './catalog-page.css'
 
 
@@ -19,11 +19,11 @@ export function CatalogPage() {
       </div>
       <div className="container catalog__container">
         <H1Elt eltClass="catalog__h1" />
-        <Filters eltClass="catalog__filters"/>
+        <Filters eltClass="catalog__filters" categories={CATEGORIES} />
         <div className="catalog__block">
           <div className="catalog__top">
-            <Sorting/>
             <Tags/>
+            <Sorting/>
           </div>
           <Catalog eltClass="catalog__catalog" />
           <Pagination/>

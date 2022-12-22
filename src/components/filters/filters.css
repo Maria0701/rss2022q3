@@ -1,0 +1,46 @@
+.filter {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 24px;
+}
+
+.filter__fieldset {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    background-color: var(--grey);
+}
+
+.filters__name {
+    padding: 8px 50px 8px 16px;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 16px;
+    line-height: 150%;
+    letter-spacing: 0.022em;
+}
+
+.filters__wrapper {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    padding: 16px;
+}
+
+.filter__label {
+    display: grid;
+    grid-template-columns: 18px 1fr;
+    column-gap: 19px;
+    align-items: center;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.filter__checkbox {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 1px solid var(--grey-darker);
+}
+
+.filter__checkbox:checked {
+    border-color: var(--gray2);
+}

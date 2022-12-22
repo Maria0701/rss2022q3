@@ -1,0 +1,10 @@
+.container__count{
+  width: 40%;
+  display: flex;
+  justify-content: space-around;
+  cursor: pointer;
+}
+
+.container__count span {
+  font-size: 24px;
+}

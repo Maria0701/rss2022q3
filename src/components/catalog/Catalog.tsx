@@ -1,22 +1,22 @@
 
 import './catalog-block.css'
-import { PRODUCTS } from "../../jsons/links"
 import { ProductCard } from "../productCard/ProductCard"
+import { IProductCard } from '../../models/models';
 
 interface ICatalogBlock {
-  eltClass: string
+  eltClass: string;
+  products: IProductCard[]
 };
 
-export function Catalog({eltClass}: ICatalogBlock) {
+export function Catalog({eltClass, products}: ICatalogBlock) {
   return (
     <div className={`catalog-block ${eltClass}`}>
       {
-        PRODUCTS?.map((product) => (
+        products?.map((product) => (
           <ProductCard product={product} key={product.id}/>
         ))
       }
-      
-      </div>
+    </div>
   )
 };
 

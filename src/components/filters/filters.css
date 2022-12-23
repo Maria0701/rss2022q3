@@ -44,3 +44,127 @@
 .filter__checkbox:checked {
     border-color: var(--gray2);
 }
+
+.filter__prices {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 34px;
+}
+
+.filter__prices label {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.filter__prices-input {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    width: 100%;
+    font-size: 12px;
+    line-height: 133%;
+    letter-spacing: 0.4px;
+    border: 1px solid rgba(51, 51, 51, 0.1);
+    border-radius: 8px;
+}
+
+.filter__range {
+    position: relative;
+    width: 100%;
+    grid-column: 1/-1;
+    padding-bottom: 30px;
+}
+
+.range__handle,
+.range__handle::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.range__handle {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+    z-index: 3;
+    height: 0;
+    pointer-events: none;
+    appearance: none;
+    outline: none;
+}
+
+.range__left-val {
+    z-index: 3;
+}
+
+.range__right-val {
+    z-index: 4;
+}
+
+/* For Chrome browsers */
+.range__handle::-webkit-slider-thumb {
+    background-color: var(--grey);
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 0 1px var(--grey2);
+    cursor: pointer;
+    height: 18px;
+    width: 18px;
+    margin-top: 4px;
+    pointer-events: all;
+    position: relative;
+}
+
+  /* For Firefox browsers */
+.range__handle::-moz-range-thumb {
+    background-color: var(--grey);
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 0 1px var(--grey2);
+    cursor: pointer;
+    height: 18px;
+    width: 18px;
+    margin-top: 4px;
+    pointer-events: all;
+    position: relative;
+}
+
+.range__slider {
+    position: relative;
+}
+
+.range__slider-track,
+.range__slider-range,
+.range__left-val,
+.range__right-val {
+    position: absolute;
+}
+
+.range__slider-track,
+.range__slider-range {
+    border-radius: 3px;
+    height: 5px;;
+}
+
+.range__slider-track {
+    background-color: var(--grey-darker);
+    width: 100%;
+    z-index: 1;
+}
+
+.range__slider-range {
+    background-color: var(--blue);
+    z-index: 2;
+}
+
+.range__left-val {
+    font-size: 12px;
+    top: 8px;
+    left: 0;
+}
+
+.range__right-val {
+    font-size: 12px;
+    top: 8px;
+    right: 0;
+}

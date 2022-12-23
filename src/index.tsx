@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import './fonts/roboto-regular.woff';
-import './fonts/roboto-regular.woff';
+import './fonts/roboto-medium.woff';
 // Установлен Redux
 // Установлен Router Dom
 //  https://dummyjson.com/products , https://api.storerestapi.com/products

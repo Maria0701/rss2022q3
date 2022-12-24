@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { Container } from "../components/container/Container";
 import { BreadCrumbs } from "../components/breadcrumbs/BreadCrumbs";
 import { H1Elt } from "../components/h1/H1";
@@ -12,6 +12,25 @@ import './catalog-page.css'
 
 
 export function CatalogPage() {
+    const [product ] = useState(PRODUCTS)
+    const [currentPage, setCurrentPage] = useState(1)
+    const [productPerPage] = useState(8)
+
+    const lastProductIndex = currentPage * productPerPage
+    const firstProductIndex = lastProductIndex - productPerPage
+    const currentProduct = product.slice(firstProductIndex, lastProductIndex)
+
+    const pageNumbers = []
+
+    for (let i = 1; i <= Math.ceil(product.length/productPerPage); i++) {
+      pageNumbers.push(i)
+    }
+
+    function paginate (pageNumber: number): void{
+      setCurrentPage(pageNumber)
+    }
+   
+
     return (
     <>
       <div className="container catalog__container">
@@ -25,8 +44,8 @@ export function CatalogPage() {
             <Tags/>
             <Sorting/>
           </div>
-          <Catalog eltClass="catalog__catalog" products={PRODUCTS}/>
-          <Pagination/>
+          <Catalog eltClass="catalog__catalog" products={currentProduct}/>
+          <Pagination pageNum={pageNumbers} paginate={paginate}/>
         </div>
         <Container/>
       </div>

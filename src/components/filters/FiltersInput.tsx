@@ -1,16 +1,17 @@
+import { CATEGORIES } from '../../jsons/links';
 import { ICategories } from '../../models/models';
 
 
 interface IFiltersInput {
   eltClass: string;
-  category: ICategories;
+  category: string;
 }
 
 export function FiltersInput({eltClass, category}: IFiltersInput) {
   return (
     <label className="filter__label">
-        <input type="checkbox" value={category._id} className="filter__checkbox"/>
-        <span className="filter__text">{category.name}</span>
+        <input type="checkbox" value={category} className="filter__checkbox"/>
+        <span className="filter__text">{CATEGORIES[category]}</span>
     </label>
   )
 };

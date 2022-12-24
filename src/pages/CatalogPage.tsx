@@ -7,7 +7,7 @@ import { Sorting } from "../components/sorting/Sorting";
 import { Tags } from "../components/tags/Tags";
 import { Catalog } from "../components/catalog/Catalog";
 import { Pagination } from "../components/pagination/Pagination";
-import { BREADCRUMBS_LINKS, CATEGORIES } from "../jsons/links";
+import { BREADCRUMBS_LINKS } from "../jsons/links";
 import './catalog-page.css'
 import { fetchProducts } from "../store/productsActions";
 import { useAppDispatch, useAppSelector } from "../hooks/reducer";
@@ -19,21 +19,23 @@ export function CatalogPage() {
 
   const dispatch = useAppDispatch()
   const {error, loading, products} = useAppSelector(state => state.products)
-  let minmax: IMinMax;
+  //let minmax: IMinMax;
 
   useEffect(() => {
     dispatch(fetchProducts());
-     minmax = getHighestAndLowest(products);
+    // minmax = getHighestAndLowest(products);
   }, [dispatch]);
 
     return (
     <>
+      { loading && <p>Applcation is loading</p> }
+      { error && <p>Something went wrong</p>}
       <div className="container catalog__container">
         <BreadCrumbs links={BREADCRUMBS_LINKS}/>
       </div>
       <div className="container catalog__container">
         <H1Elt eltClass="catalog__h1" />
-        <Filters eltClass="catalog__filters" categories={CATEGORIES} minmax={getHighestAndLowest(products)} />
+        <Filters eltClass="catalog__filters" minmax={getHighestAndLowest(products)} />
         <div className="catalog__block">
           <div className="catalog__top">
             <Tags/>

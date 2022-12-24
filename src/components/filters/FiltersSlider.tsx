@@ -19,7 +19,7 @@ export function FiltersSlider({eltClass, minmax, onChange}: IFiltersSlider) {
     const range = useRef<HTMLDivElement>(null);
     const debouncedMax = useDebounce(maxInputVal, 400);
     const debouncedMin = useDebounce(minInputVal, 400);
-    console.log(min, max, minVal, maxVal);
+    //console.log(min, max, minVal, maxVal);
 
     // перевод в проценты
     const getPercent = useCallback(

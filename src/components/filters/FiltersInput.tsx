@@ -1,6 +1,4 @@
 import { CATEGORIES } from '../../jsons/links';
-import { ICategories } from '../../models/models';
-
 
 interface IFiltersInput {
   eltClass: string;

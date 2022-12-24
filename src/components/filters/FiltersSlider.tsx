@@ -4,11 +4,11 @@ import { useDebounce } from "../../hooks/deboubce";
 
 interface IFiltersSlider {
     eltClass: string;
-    onChange?: Function
+    onFChange?: Function
     minmax: {min:number, max: number};
 }
 
-export function FiltersSlider({eltClass, minmax, onChange}: IFiltersSlider) {
+export function FiltersSlider({eltClass, minmax, onFChange}: IFiltersSlider) {
     const {min, max} = minmax;
     const [minVal, setMinVal] = useState(min);
     const [maxVal, setMaxVal] = useState(max);
@@ -68,9 +68,9 @@ export function FiltersSlider({eltClass, minmax, onChange}: IFiltersSlider) {
         setMaxInputVal(value);
     }, [debouncedMax])
 
-    /*useEffect(() => {
-        onChange!({min: minVal, max: maxVal});
-    }, [minVal,maxVal, onChange]);*/
+    useEffect(() => {
+        onFChange!({min: minVal, max: maxVal});
+    }, [minVal,maxVal]);
 
     return (
       <div className="filter__fieldset">

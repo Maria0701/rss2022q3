@@ -29,16 +29,13 @@ export interface ServerResponse<T> {
   total: number;
 }
 
-
-export interface ICategories {
-  products: string[];
-  _id: string;
-  name: string;
-  slug: string;
-};
-
-
 export interface IMinMax {
   min:number, 
   max: number
 };
+
+export interface IFilter {
+  categories: string[],
+  min: number,
+  max: number,
+}

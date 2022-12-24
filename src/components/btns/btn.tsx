@@ -5,7 +5,7 @@ interface IBtnElt {
   eltClass: string;
   btnText: string;
   isDisabled?: boolean;
-  onClick?: () => void;
+  onClick?: (event: React.MouseEvent) => void;
 };
 
 export function Btn ({eltClass, onClick, btnText, isDisabled}: IBtnElt) {

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { IProductCard } from '../models/models'
+import { IFilter, IProductCard } from '../models/models'
 
 interface ProductsState {
     loading: boolean;
@@ -29,6 +29,14 @@ export const productsSlice = createSlice({
         productsFetchError(state, action: PayloadAction<Error>) {
             state.loading = false;
             state.error = action.payload.message;
+        },
+        productsFilter(state, action: PayloadAction<IFilter>) {
+            state.products = state.products
+                .filter(product => {
+                    if (action.payload.categories.length === 0) return product;
+                    return action.payload.categories.includes(product.category)
+                })
+                .filter(product => product.price >= action.payload.min && action.payload.max > product.price);
         }
     }
 });
@@ -36,7 +44,8 @@ export const productsSlice = createSlice({
 export const {
     productsFetching,
     productsFetchSuccess,
-    productsFetchError
+    productsFetchError,
+    productsFilter,
 } = productsSlice.actions;
 
 export default productsSlice.reducer;

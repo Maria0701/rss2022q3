@@ -5,13 +5,14 @@ interface ProductsState {
     loading: boolean;
     error: string;
     products: IProductCard[];
+    productsCurrent: IProductCard[];
 }
 
 const initialState: ProductsState = {
     loading: false,
     error: '',
     products: [],
-    
+    productsCurrent:[],
 };
 
 export const productsSlice = createSlice({
@@ -24,19 +25,20 @@ export const productsSlice = createSlice({
         productsFetchSuccess(state, action: PayloadAction<IProductCard[]>) {
             state.error = '';
             state.loading = false;
-            state.products = action.payload
+            state.productsCurrent = action.payload;
+            state.products = action.payload;
         },
         productsFetchError(state, action: PayloadAction<Error>) {
             state.loading = false;
             state.error = action.payload.message;
         },
         productsFilter(state, action: PayloadAction<IFilter>) {
-            state.products = state.products
+            state.products = state.productsCurrent
                 .filter(product => {
                     if (action.payload.categories.length === 0) return product;
                     return action.payload.categories.includes(product.category)
                 })
-                .filter(product => product.price >= action.payload.min && action.payload.max > product.price);
+                /*.filter(product => (product.price >= action.payload.min) && (action.payload.max > product.price));*/
         }
     }
 });

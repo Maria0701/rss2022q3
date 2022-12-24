@@ -24,11 +24,11 @@ export function Filters({eltClass, minmax}: IFiltersElt) {
 
   const getMinMax = (changedMinMax: IMinMax) => {
     console.log(changedMinMax, 'change')
-    /*setFilter((prev) => ({
+    setFilter((prev) => ({
       ...prev,
       min: changedMinMax.min,
       max: changedMinMax.max
-    }));*/
+    }));
   };
 
 

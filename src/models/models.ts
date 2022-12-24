@@ -15,31 +15,30 @@ export interface IProductCard{
   price: number,
   description: string,
   category: string,
-  image: string,
+  images: string[],
   rating: {
       rate: number,
       count: number
   }
 }
 
-export interface IProduct {
-  [x: string]: any;
-  id: number;
-  title: string;
-  description: string;
-  price: number;
-  discountPercentage: number;
-  rating: number;
-  stock: number;
-  brand: string;
-  category: string;
-  thumbnail: string;
-  images: string[];
+export interface ServerResponse<T> {
+  limit: number;
+  products: T[];
+  skip: number;
+  total: number;
 }
+
 
 export interface ICategories {
   products: string[];
   _id: string;
   name: string;
   slug: string;
-}
+};
+
+
+export interface IMinMax {
+  min:number, 
+  max: number
+};

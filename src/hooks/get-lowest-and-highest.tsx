@@ -1,4 +1,4 @@
-import { IProduct, IProductCard } from "../models/models";
+import { IProductCard } from "../models/models";
 interface IMinMax {
     min: number;
     max: number;

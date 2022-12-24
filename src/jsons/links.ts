@@ -1,4 +1,3 @@
-import { IProductCard } from "../models/models";
 export const LINKS_FOR_FOOTER = [
     {
         name: 'Maria0701',
@@ -25,7 +24,7 @@ export const BREADCRUMBS_LINKS = [
   ];
 
 
-export const PRODUCTS: IProductCard[] = [
+export const PRODUCTS = [
   {
       "id":1,
       "title":"Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",

@@ -14,7 +14,7 @@ export function ProductCard ({product}: IProductProps) {
   return (
     <div className="product-card">
       <div className="product-card__img">
-        <img src={product.image} alt={product.title} />
+        <img src={product.images[0]} alt={product.title} />
       </div>
       <div className="product-card__content">
         <div className="product-card__rating">Rate: <span >{product.rating.rate}</span></div>

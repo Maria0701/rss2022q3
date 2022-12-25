@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { Container } from "../components/container/Container";
 import { BreadCrumbs } from "../components/breadcrumbs/BreadCrumbs";
 import { H1Elt } from "../components/h1/H1";
@@ -18,14 +18,24 @@ import { getHighestAndLowest } from "../hooks/get-lowest-and-highest";
 export function CatalogPage() {
 
   const dispatch = useAppDispatch()
-  const {error, loading, products} = useAppSelector(state => state.products)
+  const {error, loading, products} = useAppSelector(state => state.products);
+  const [minmax, setMinMax] =useState<IMinMax>({
+    min: 0,
+    max: 0,
+  });
   //let minmax: IMinMax;
 
   useEffect(() => {
     dispatch(fetchProducts());
-    // minmax = getHighestAndLowest(products);
+    setMinMax(getHighestAndLowest(products))
   }, [dispatch]);
 
+  useEffect(() => {
+    if (products.length !== 0) {
+      setMinMax(getHighestAndLowest(products))
+    }
+  },[products])
+console.log(minmax, 'catalog');
     return (
     <>
       { loading && <p>Applcation is loading</p> }
@@ -35,7 +45,7 @@ export function CatalogPage() {
       </div>
       <div className="container catalog__container">
         <H1Elt eltClass="catalog__h1" />
-        <Filters eltClass="catalog__filters" minmax={getHighestAndLowest(products)} />
+        <Filters eltClass="catalog__filters" minmax={minmax} />
         <div className="catalog__block">
           <div className="catalog__top">
             <Tags/>

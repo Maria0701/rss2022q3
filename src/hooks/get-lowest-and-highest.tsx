@@ -5,7 +5,14 @@ interface IMinMax {
 };
 
 export function getHighestAndLowest(arr:IProductCard[]):IMinMax {
-    const arrPrices = arr.map(item => item.price);
+    console.log(arr);
+    if (arr.length === 0) {return {
+        min: 0,
+        max: 0,
+    }}
+    const arrPrices = arr.map(item => item.price || 0);
+    console.log({min: Math.min(...arrPrices),
+    max: Math.max(...arrPrices)},'function')
     return {
         min: Math.min(...arrPrices),
         max: Math.max(...arrPrices),

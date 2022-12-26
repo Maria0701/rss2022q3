@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+import React, { useState } from "react"
+=======
 import React, { useEffect, useState } from "react"
+>>>>>>> 140853bfea3bf1e94ad5b1a7de1071dda11ca44d
 import { Container } from "../components/container/Container";
 import { BreadCrumbs } from "../components/breadcrumbs/BreadCrumbs";
 import { H1Elt } from "../components/h1/H1";
@@ -16,6 +20,27 @@ import { getHighestAndLowest } from "../hooks/get-lowest-and-highest";
 
 
 export function CatalogPage() {
+<<<<<<< HEAD
+    const [product ] = useState(PRODUCTS)
+    const [currentPage, setCurrentPage] = useState(1)
+    const [productPerPage] = useState(8)
+
+    const lastProductIndex = currentPage * productPerPage
+    const firstProductIndex = lastProductIndex - productPerPage
+    const currentProduct = product.slice(firstProductIndex, lastProductIndex)
+
+    const pageNumbers = []
+
+    for (let i = 1; i <= Math.ceil(product.length/productPerPage); i++) {
+      pageNumbers.push(i)
+    }
+
+    function paginate (pageNumber: number): void{
+      setCurrentPage(pageNumber)
+    }
+   
+
+=======
 
   const dispatch = useAppDispatch()
   const {error, loading, products} = useAppSelector(state => state.products);
@@ -36,6 +61,7 @@ export function CatalogPage() {
     }
   },[products])
 console.log(minmax, 'catalog');
+>>>>>>> 140853bfea3bf1e94ad5b1a7de1071dda11ca44d
     return (
     <>
       { loading && <p>Applcation is loading</p> }
@@ -51,8 +77,13 @@ console.log(minmax, 'catalog');
             <Tags/>
             <Sorting/>
           </div>
+<<<<<<< HEAD
+          <Catalog eltClass="catalog__catalog" products={currentProduct}/>
+          <Pagination pageNum={pageNumbers} paginate={paginate}/>
+=======
           <Catalog eltClass="catalog__catalog" products={products}/>
           <Pagination/>
+>>>>>>> 140853bfea3bf1e94ad5b1a7de1071dda11ca44d
         </div>
         <Container/>
       </div>

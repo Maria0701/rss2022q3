@@ -5,6 +5,6 @@ interface ISearch {
 
 export function H1Elt({eltClass}: ISearch) {
   return (
-    <h1 className={`h1 ${eltClass}`}>Платья</h1>
+    <h1 className={`h1 ${eltClass}`}>Catalog</h1>
   )
 }

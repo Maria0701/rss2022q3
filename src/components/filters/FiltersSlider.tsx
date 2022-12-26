@@ -4,12 +4,19 @@ import { useDebounce } from "../../hooks/deboubce";
 
 interface IFiltersSlider {
     eltClass: string;
-    onChange?: Function
+    onFChange?: Function
     minmax: {min:number, max: number};
 }
 
-export function FiltersSlider({eltClass, minmax, onChange}: IFiltersSlider) {
+export function FiltersSlider({eltClass, minmax, onFChange}: IFiltersSlider) {
     const {min, max} = minmax;
+    /*const minmax1 = {
+        min:100,
+        max:1000,
+    };
+  
+    const {min, max} = minmax1;*/
+    console.log(min, max, 'initial');
     const [minVal, setMinVal] = useState(min);
     const [maxVal, setMaxVal] = useState(max);
     const [minInputVal, setMinInputVal] = useState(min)
@@ -19,7 +26,15 @@ export function FiltersSlider({eltClass, minmax, onChange}: IFiltersSlider) {
     const range = useRef<HTMLDivElement>(null);
     const debouncedMax = useDebounce(maxInputVal, 400);
     const debouncedMin = useDebounce(minInputVal, 400);
-    console.log(min, max, minVal, maxVal);
+
+    useEffect(() => {
+        setMinVal(min);
+        setMaxVal(max);
+        setMinInputVal(min);
+        setMaxInputVal(max);
+        
+    }, [min, max]);
+    //console.log(min, max, minVal, maxVal);
 
     // перевод в проценты
     const getPercent = useCallback(
@@ -68,9 +83,10 @@ export function FiltersSlider({eltClass, minmax, onChange}: IFiltersSlider) {
         setMaxInputVal(value);
     }, [debouncedMax])
 
-    /*useEffect(() => {
-        onChange!({min: minVal, max: maxVal});
-    }, [minVal,maxVal, onChange]);*/
+    useEffect(() => {
+        onFChange!({min: minVal, max: maxVal});
+        console.log(minVal,  maxVal, 'onfchange');
+    }, [minVal,maxVal]);
 
     return (
       <div className="filter__fieldset">

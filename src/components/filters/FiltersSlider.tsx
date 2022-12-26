@@ -10,13 +10,6 @@ interface IFiltersSlider {
 
 export function FiltersSlider({eltClass, minmax, onFChange}: IFiltersSlider) {
     const {min, max} = minmax;
-    /*const minmax1 = {
-        min:100,
-        max:1000,
-    };
-  
-    const {min, max} = minmax1;*/
-    console.log(min, max, 'initial');
     const [minVal, setMinVal] = useState(min);
     const [maxVal, setMaxVal] = useState(max);
     const [minInputVal, setMinInputVal] = useState(min)
@@ -32,9 +25,7 @@ export function FiltersSlider({eltClass, minmax, onFChange}: IFiltersSlider) {
         setMaxVal(max);
         setMinInputVal(min);
         setMaxInputVal(max);
-        
     }, [min, max]);
-    //console.log(min, max, minVal, maxVal);
 
     // перевод в проценты
     const getPercent = useCallback(
@@ -85,7 +76,6 @@ export function FiltersSlider({eltClass, minmax, onFChange}: IFiltersSlider) {
 
     useEffect(() => {
         onFChange!({min: minVal, max: maxVal});
-        console.log(minVal,  maxVal, 'onfchange');
     }, [minVal,maxVal]);
 
     return (

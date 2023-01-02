@@ -12,7 +12,7 @@ export function ShoppingCart({styleCart} : ICart) {
   const numItems = useAppSelector(getMemoizedNumItems);
 
   return (
-    <Link to='/' className={`small-cart ${styleCart}`}>
+    <Link to='/cart' className={`small-cart ${styleCart}`}>
       <img src={cart} alt="cart"/>
       <span>{numItems ? numItems : '0'}</span>
     </Link>

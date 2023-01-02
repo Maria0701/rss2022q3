@@ -1,0 +1,10 @@
+.product__actions {
+  display: grid;
+  grid-template-columns: 30% minmax(0, 1fr);
+  column-gap: 14px;
+  align-items: center;
+  
+}
+
+
+

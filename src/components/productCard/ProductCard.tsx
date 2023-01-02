@@ -1,20 +1,37 @@
 import { useState } from "react"
-import { IProductCard } from "../../models/models"
-import { Btn } from "../btns/btn"
-import './productCard.css'
-import { AddProductToCart } from "../addProductToCart/AddProductToCart"
-import { useNavigate } from "react-router-dom"
+import './addProductToCart.css';
+import './productCard.css';
+import { IProductCard } from "../../models/models";
+import { Btn } from "../btns/btn";
+import { addToCart } from "../../store/cartSlice";
+// import { AddProductToCart } from "../addProductToCart/AddProductToCart"
+import { useNavigate } from "react-router-dom";
+import { CountOfProduct } from "../countOfProduct/CountOfProduct";
+import { useAppDispatch } from "../../hooks/reducer";
 
 interface IProductProps {
   product: IProductCard
 }
 
 export function ProductCard ({product}: IProductProps) {
+  const dispatch = useAppDispatch();
   const [details, setDetails] = useState(false)
   const navigate = useNavigate()
   const btnClassName = details ? "add-yellow product-card__btn ": "product-card__btn";
 
   const clickHandler = () => navigate(`products/${product.id}`)
+
+  const [count, setCount] = useState(1)
+
+  const decreaseCount = (): void => {
+    setCount((el) => el > 0 ? el -= 1 : 0)
+  };
+
+  const increaseCount = (): void => {
+    setCount((el) => el += 1)
+  };
+
+  const isDisabled:boolean = count ? false : true;
 
   return (
     <div className="product-card">
@@ -32,7 +49,10 @@ export function ProductCard ({product}: IProductProps) {
                 <div>{product.description}</div>
           </div>
         }
-      <AddProductToCart/>
+      <div className="product__actions">
+        <CountOfProduct count={count} decreaseCount={decreaseCount} increaseCount={increaseCount}/>
+        <Btn eltClass='btn__addToCart' btnText='В корзину' isDisabled={isDisabled} onClick={() => dispatch(addToCart({id: product.id, count: count}))}/>
+      </div>
     </div>
 
   )

@@ -18,7 +18,11 @@ import { getHighestAndLowest } from "../hooks/get-lowest-and-highest";
 export function CatalogPage() {
 
   const dispatch = useAppDispatch()
-  const {error, loading, products} = useAppSelector(state => state.products);
+  
+  const products = useAppSelector(state => state.products.products);
+  const errorProducts = useAppSelector(state => state.products.error);
+  const loadingProducts = useAppSelector(state => state.products.loading);
+  
   const [minmax, setMinMax] =useState<IMinMax>({
     min: 0,
     max: 0,
@@ -26,8 +30,7 @@ export function CatalogPage() {
   //let minmax: IMinMax;
 
   useEffect(() => {
-    dispatch(fetchProducts());
-    setMinMax(getHighestAndLowest(products))
+    dispatch(fetchProducts(10, 0));
   }, [dispatch]);
 
   useEffect(() => {
@@ -36,7 +39,7 @@ export function CatalogPage() {
     }
   },[products])
 
-  const [product ] = useState(products)
+    const [product ] = useState(products)
     const [currentPage, setCurrentPage] = useState(1)
     const [productPerPage] = useState(8)
 
@@ -56,8 +59,8 @@ export function CatalogPage() {
     
     return (
     <>
-      { loading && <p>Applcation is loading</p> }
-      { error && <p>Something went wrong</p>}
+      { loadingProducts && <p>Applcation is loading</p> }
+      { errorProducts && <p>Something went wrong</p>}
       <div className="container catalog__container">
         <BreadCrumbs links={BREADCRUMBS_LINKS}/>
       </div>

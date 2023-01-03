@@ -5,14 +5,11 @@ import {Route, Routes} from 'react-router-dom'
 import { Header} from './components/header/Header';
 import { Footer } from './components/footer/Footer';
 import { useAppDispatch } from './hooks/reducer';
-import { fetchCategories } from './store/categoriesActions';
+
 import { CartPage } from './pages/CartPage';
 
 function App() {
   const dispatch = useAppDispatch();
-  useEffect(()=> {
-    dispatch(fetchCategories())
-  }, [dispatch]);
 
   return (
     <>

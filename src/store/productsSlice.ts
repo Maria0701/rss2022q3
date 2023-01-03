@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
-import { sortAndDeduplicateDiagnostics } from 'typescript';
-import { IFilter, IProductCard } from '../models/models'
+import { IProductCard } from '../models/models'
 import { baseURL } from './productsActions';
 
 interface ProductsState {

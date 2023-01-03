@@ -10,8 +10,6 @@ import { Pagination } from "../components/pagination/Pagination";
 import { BREADCRUMBS_LINKS } from "../jsons/links";
 import './catalog-page.css'
 import { useAppDispatch, useAppSelector } from "../hooks/reducer";
-import { IMinMax } from "../models/models";
-import { getHighestAndLowest } from "../hooks/get-lowest-and-highest";
 import { fetchProductsThunk } from "../store/productsSlice";
 
 

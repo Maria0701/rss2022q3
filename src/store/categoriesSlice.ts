@@ -1,4 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { baseURL } from './productsActions';
 
 interface CategoriesState {
     loading: boolean;
@@ -13,29 +14,42 @@ const initialState: CategoriesState = {
     
 };
 
+export const fetchCategoriesThunk = createAsyncThunk(
+    'products/fetchcategories',
+    async () => {
+        try {
+            const response = await fetch(`${baseURL}products/categories`)
+            .then(res => res.json());
+            return response;
+        } catch (err) {
+            return err;
+        }
+    }
+)
+
 export const CategoriesSlice = createSlice({
     name: 'categories',
     initialState: initialState,
     reducers: {
-        categoriesFetching(state) {
-            state.loading = true
-        },
-        categoriesFetchSuccess(state, action: PayloadAction<string[]>) {
-            state.error = '';
-            state.loading = false;
-            state.categories = action.payload
-        },
-        categoriesFetchError(state, action: PayloadAction<Error>) {
-            state.loading = false;
-            state.error = action.payload.message;
-        }
+        
+    }, extraReducers: (builder) => {
+        builder
+         .addCase(fetchCategoriesThunk.pending, (state) => {
+             state.loading = true;
+             state.error = '';
+         })
+         .addCase(fetchCategoriesThunk.fulfilled, (state, action:PayloadAction<string[]>) => {
+             state.categories = action.payload;
+             state.loading = false;
+             state.error = '';
+         })
+         .addCase(fetchCategoriesThunk.rejected, (state) => {
+             state.loading = false;
+             state.error = 'Error';
+         })
     }
 });
 
-export const {
-    categoriesFetching,
-    categoriesFetchSuccess,
-    categoriesFetchError
-} = CategoriesSlice.actions;
+
 
 export default CategoriesSlice.reducer;

@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState, useRef } from "react";
 import { useDebounce } from "../../hooks/deboubce";
 import { getHighestAndLowest } from "../../hooks/get-lowest-and-highest";
 import { useAppSelector } from "../../hooks/reducer";
-
+//import { IMinMax } from "../../models/models";
 
 interface IFiltersSlider {
     eltClass: string;
@@ -11,6 +11,7 @@ interface IFiltersSlider {
 
 export function FiltersSlider({eltClass, onFChange}: IFiltersSlider) {
     const products = useAppSelector(state => state.products.products);
+    
     const {min, max} = getHighestAndLowest(products);
     const [minVal, setMinVal] = useState(min);
     const [maxVal, setMaxVal] = useState(max);
@@ -22,6 +23,12 @@ export function FiltersSlider({eltClass, onFChange}: IFiltersSlider) {
     const debouncedMax = useDebounce(maxInputVal, 400);
     const debouncedMin = useDebounce(minInputVal, 400);
 
+    useEffect(() => {
+        setMinVal(min);
+        setMaxVal(max);
+        setMinInputVal(min);
+        setMaxInputVal(max);
+    }, [min, max]);
 
     // перевод в проценты
     const getPercent = useCallback(
@@ -59,7 +66,7 @@ export function FiltersSlider({eltClass, onFChange}: IFiltersSlider) {
         minValRef.current = value;
         setMinInputVal(value);
     }, [debouncedMin]);
-    // input max change
+
 
     useEffect(() => {
         const value = Math.max(Number(maxInputVal), minVal + 1) > max 

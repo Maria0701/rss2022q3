@@ -77,15 +77,7 @@ const cartSlice = createSlice({
     },
 });
 
-/*export function checkout() {
-    return function checkoutThunk(dispatch: AppDispatch) {
-        dispatch({type: 'cart/checkout/fulfilled'});
-        setTimeout(()=> {
-            dispatch({type: ''})
-        }, 500);
-    }
-}
-*/
+
 export const {addToCart, removeFromCard, updateQuantity} = cartSlice.actions;
 export default cartSlice.reducer;
 

@@ -2,7 +2,7 @@ import { ChangeEvent, useState, useEffect } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useDebounce } from '../../hooks/deboubce';
 import { useAppDispatch, useAppSelector } from '../../hooks/reducer';
-import { searchProducts } from '../../store/productsActions';
+//import { searchProducts } from '../../store/productsActions';
 import search from './img/search.png'
 import './searchHeader.css'
 interface ISearch {
@@ -26,14 +26,12 @@ export function SearchHeader({styleSearch}: ISearch) {
 
   useEffect(() => {
     if (debounced.length > 3) {
-      dispatch(searchProducts(debounced));
+      /*dispatch(searchProducts(debounced));*/
       setDropdown(true);
     } else {
       setDropdown(false);
     }
   }, [debounced]);
-
-  //console.log(searchProds);
 
   const clickHandler = (id:number) => {
     navigate(`/products/${id}`);

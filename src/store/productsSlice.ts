@@ -1,5 +1,7 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
+import { sortAndDeduplicateDiagnostics } from 'typescript';
 import { IFilter, IProductCard } from '../models/models'
+import { baseURL } from './productsActions';
 
 interface ProductsState {
     loading: boolean;
@@ -14,6 +16,20 @@ const initialState: ProductsState = {
     products: [],
     productsCurrent:[],
 };
+
+export const fetchProductsThunk = createAsyncThunk(
+    'products/fetchproducts',
+    async () => {
+        try {
+            const response = await fetch(`${baseURL }products`)
+            .then(res => res.json());
+            return response.products;
+        } catch (err) {
+            return err;
+        }
+        
+    }
+)
 
 export const productsSlice = createSlice({
     name: 'products',
@@ -40,7 +56,22 @@ export const productsSlice = createSlice({
                 })
                 /*.filter(product => (product.price >= action.payload.min) && (action.payload.max > product.price));*/
         }
-    }
+    }/*, extraReducers: (builder) => {
+       builder
+        .addCase(fetchProductsThunk.pending, (state) => {
+            state.loading = true;
+            state.error = '';
+        })
+        .addCase(fetchProductsThunk.fulfilled, (state, action:PayloadAction<IProductCard[]>) => {
+            state.products = action.payload;
+            state.loading = false;
+            state.error = '';
+        })
+        .addCase(fetchProductsThunk.rejected, (state, action) => {
+            state.loading = false;
+            state.error = 'Error';
+        })
+    }*/
 });
 
 export const {

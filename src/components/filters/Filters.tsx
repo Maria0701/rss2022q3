@@ -5,7 +5,7 @@ import { FiltersSlider } from './FiltersSlider';
 import './filters.css'
 import React, { useEffect, useState } from 'react';
 import { Btn } from '../btns/btn';
-import productsSlice, { productsFilter } from '../../store/productsSlice';
+import productsSlice from '../../store/productsSlice';
 
 interface IFiltersElt {
   eltClass: string;
@@ -23,7 +23,7 @@ export function Filters({eltClass, minmax}: IFiltersElt) {
   });
 
   const getMinMax = (changedMinMax: IMinMax) => {
-    console.log(changedMinMax, 'change')
+  
     setFilter((prev) => ({
       ...prev,
       min: changedMinMax.min,
@@ -37,11 +37,7 @@ export function Filters({eltClass, minmax}: IFiltersElt) {
     return filter.categories.length > 0 || filter.minmax.min > minmax.min || filter.minmax.max < minmax.max;
   }*/
 
-  useEffect(() => {
-    dispatch(productsFilter(filter));
-    console.log(filter.min, filter.max);
-  }, [filter.min, filter.max, categories])
-
+  
   const clearFilter = (event: React.MouseEvent) => {
     setFilter({
       categories: [],

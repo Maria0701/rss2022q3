@@ -21,7 +21,7 @@ export function CatalogPage() {
   
   const products = useAppSelector(state => state.products.products);
   const errorProducts = useAppSelector(state => state.products.error);
-  const loadingProducts = useAppSelector(state => state.products.loading);
+  const loading = useAppSelector(state => state.products.loading);
   
   const [minmax, setMinMax] =useState<IMinMax>({
     min: 0,
@@ -59,7 +59,7 @@ export function CatalogPage() {
     
     return (
     <>
-      { loadingProducts && <p>Applcation is loading</p> }
+      { loading && <p>Applcation is loading</p> }
       { errorProducts && <p>Something went wrong</p>}
       <div className="container catalog__container">
         <BreadCrumbs links={BREADCRUMBS_LINKS}/>

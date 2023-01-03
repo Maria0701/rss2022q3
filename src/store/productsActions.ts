@@ -4,7 +4,7 @@ import {productsFetching,
     productsFetchError
 } from './productsSlice';
 
-const baseURL = 'https://dummyjson.com/';
+export const baseURL = 'https://dummyjson.com/';
 
 export const fetchProducts = (limit = 10, skip = 0) => {
     return async (dispatch: AppDispatch) => {

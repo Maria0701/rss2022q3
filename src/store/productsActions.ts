@@ -1,11 +1,8 @@
 import { AppDispatch } from './store';
-import {productsFetching,
-    productsFetchSuccess,
-    productsFetchError
-} from './productsSlice';
+
 
 export const baseURL = 'https://dummyjson.com/';
-
+/*
 export const fetchProducts = (limit = 10, skip = 0) => {
     return async (dispatch: AppDispatch) => {
         try {
@@ -30,4 +27,4 @@ export const searchProducts = (searchRequest: string) => {
             productsFetchError(e as Error)
         } 
     }
-}
+}*/

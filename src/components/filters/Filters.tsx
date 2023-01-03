@@ -3,32 +3,20 @@ import { IFilter, IMinMax} from '../../models/models';
 import { FiltersFieldset } from './Filtersfieldset';
 import { FiltersSlider } from './FiltersSlider';
 import './filters.css'
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Btn } from '../btns/btn';
-import productsSlice from '../../store/productsSlice';
+
 
 interface IFiltersElt {
   eltClass: string;
-  minmax: IMinMax;
 }
 
-export function Filters({eltClass, minmax}: IFiltersElt) {
+export function Filters({eltClass}: IFiltersElt) {
   const dispatch = useAppDispatch()
   const {categories, loading, error} = useAppSelector(state => state.categories);
-  
-  const [filter, setFilter] = useState<IFilter>({
-    categories: [],
-    min: {...minmax}.min,
-    max: {...minmax}.max,
-  });
 
   const getMinMax = (changedMinMax: IMinMax) => {
   
-    setFilter((prev) => ({
-      ...prev,
-      min: changedMinMax.min,
-      max: changedMinMax.max
-    }));
   };
 
 
@@ -39,11 +27,7 @@ export function Filters({eltClass, minmax}: IFiltersElt) {
 
   
   const clearFilter = (event: React.MouseEvent) => {
-    setFilter({
-      categories: [],
-      min: {...minmax}.min,
-      max: {...minmax}.max,
-    });
+
   };
 
 
@@ -53,7 +37,7 @@ export function Filters({eltClass, minmax}: IFiltersElt) {
       {loading && <p>Filter is Loading</p>}
       {error && <p>Something went wrong</p>}
       {<FiltersFieldset eltClass='' categories={categories} />}
-      {<FiltersSlider  eltClass='' minmax={minmax} onFChange={getMinMax}/>}
+      {<FiltersSlider  eltClass='' onFChange={getMinMax}/>}
       { hasFilter && <Btn eltClass={'clear__filter'}
         onClick={clearFilter} btnText={'Clear Filter'}/>}
     </div>

@@ -35,28 +35,8 @@ export const productsSlice = createSlice({
     name: 'products',
     initialState: initialState,
     reducers: {
-        productsFetching(state) {
-            state.loading = true
-        },
-        productsFetchSuccess(state, action: PayloadAction<IProductCard[]>) {
-            state.error = '';
-            state.loading = false;
-            state.productsCurrent = action.payload;
-            state.products = action.payload;
-        },
-        productsFetchError(state, action: PayloadAction<Error>) {
-            state.loading = false;
-            state.error = action.payload.message;
-        },
-        productsFilter(state, action: PayloadAction<IFilter>) {
-            state.products = state.productsCurrent
-                .filter(product => {
-                    if (action.payload.categories.length === 0) return product;
-                    return action.payload.categories.includes(product.category)
-                })
-                /*.filter(product => (product.price >= action.payload.min) && (action.payload.max > product.price));*/
-        }
-    }/*, extraReducers: (builder) => {
+
+    }, extraReducers: (builder) => {
        builder
         .addCase(fetchProductsThunk.pending, (state) => {
             state.loading = true;
@@ -71,14 +51,8 @@ export const productsSlice = createSlice({
             state.loading = false;
             state.error = 'Error';
         })
-    }*/
+    }
 });
 
-export const {
-    productsFetching,
-    productsFetchSuccess,
-    productsFetchError,
-    productsFilter,
-} = productsSlice.actions;
 
 export default productsSlice.reducer;

@@ -9,10 +9,10 @@ import { Catalog } from "../components/catalog/Catalog";
 import { Pagination } from "../components/pagination/Pagination";
 import { BREADCRUMBS_LINKS } from "../jsons/links";
 import './catalog-page.css'
-import { fetchProducts } from "../store/productsActions";
 import { useAppDispatch, useAppSelector } from "../hooks/reducer";
 import { IMinMax } from "../models/models";
 import { getHighestAndLowest } from "../hooks/get-lowest-and-highest";
+import { fetchProductsThunk } from "../store/productsSlice";
 
 
 export function CatalogPage() {
@@ -23,21 +23,10 @@ export function CatalogPage() {
   const errorProducts = useAppSelector(state => state.products.error);
   const loading = useAppSelector(state => state.products.loading);
   
-  const [minmax, setMinMax] =useState<IMinMax>({
-    min: 0,
-    max: 0,
-  });
-  //let minmax: IMinMax;
 
   useEffect(() => {
-    dispatch(fetchProducts(10, 0));
+    dispatch(fetchProductsThunk());
   }, [dispatch]);
-
-  useEffect(() => {
-    if (products.length !== 0) {
-      setMinMax(getHighestAndLowest(products))
-    }
-  },[products])
 
     const [product ] = useState(products)
     const [currentPage, setCurrentPage] = useState(1)
@@ -66,7 +55,7 @@ export function CatalogPage() {
       </div>
       <div className="container catalog__container">
         <H1Elt eltClass="catalog__h1" />
-        <Filters eltClass="catalog__filters" minmax={minmax} />
+        <Filters eltClass="catalog__filters" />
         <div className="catalog__block">
           <div className="catalog__top">
             <Tags/>

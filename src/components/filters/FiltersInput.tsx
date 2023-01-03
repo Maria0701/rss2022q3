@@ -8,8 +8,6 @@ interface IFiltersInput {
   checked: boolean,
 }
 
-
-
 export function FiltersInput({eltClass, category, checked}: IFiltersInput) {
   const dispatch = useAppDispatch();
 

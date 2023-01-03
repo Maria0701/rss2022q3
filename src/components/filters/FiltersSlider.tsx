@@ -12,7 +12,6 @@ interface IFiltersSlider {
 export function FiltersSlider({eltClass}: IFiltersSlider) {
     const dispatch = useAppDispatch();
 
-    const products = useAppSelector(state => state.products.initialProducts);
     const cats = useAppSelector(state => state.filter.filterCategories);
     const filteredMin = useAppSelector(state => state.filter.minPrice);
     const filteredMax = useAppSelector(state => state.filter.maxPrice);

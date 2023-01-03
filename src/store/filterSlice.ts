@@ -6,6 +6,7 @@ export interface IFilterState {
     maxPrice: number,
 };
 
+
 const initialState: IFilterState = {
     filterCategories: [],
     minPrice: 0,

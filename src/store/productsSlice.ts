@@ -1,6 +1,8 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction, createAsyncThunk, createSelector } from '@reduxjs/toolkit'
+import { getHighestAndLowest } from '../hooks/get-lowest-and-highest';
 import { IProductCard } from '../models/models'
 import { baseURL } from './productsActions';
+import { RootState } from './store';
 
 interface ProductsState {
     loading: boolean;
@@ -43,9 +45,13 @@ export const productsSlice = createSlice({
                 state.products = state.filteredProducts;
             }
         },
-        filterByPrice(state, action: PayloadAction<{min: number, max: number}>) {
-            state.products = state.products.filter(item => action.payload.min < item.price && action.payload.max > item.price);
-            state.filteredProducts = state.products.filter(item => action.payload.min < item.price && action.payload.max > item.price);
+        filterByPrice(state, action: PayloadAction<{min: number, max: number, cats: string[]}>) {
+            if (action.payload.cats.length > 0) {
+                state.products = state.initialProducts.filter(item => action.payload.min < item.price && action.payload.max > item.price && action.payload.cats.includes(item.category));
+            } else {
+                state.products = state.initialProducts.filter(item => action.payload.min < item.price && action.payload.max > item.price);
+                state.filteredProducts = state.initialProducts.filter(item => action.payload.min < item.price && action.payload.max > item.price);
+            }
         }
     }, extraReducers: (builder) => {
        builder
@@ -72,3 +78,12 @@ export const {filterByCategories, filterByPrice} = productsSlice.actions;
 
 export default productsSlice.reducer;
 
+export function getMinMax(state: RootState) {
+    return getHighestAndLowest(state.products.initialProducts);
+}
+
+
+export const getMemoizedMinMax = createSelector(
+    (state: RootState) => state.products.initialProducts,
+    (initialProducts) => getHighestAndLowest(initialProducts)
+);

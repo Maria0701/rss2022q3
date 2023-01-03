@@ -31,7 +31,9 @@ const filterSlice = createSlice({
             }
         },
         clearFilter(state) {
-            state = initialState;
+            state.filterCategories = [];
+            state.minPrice = 0;
+            state.maxPrice = 0;
         }
     }
 });

@@ -1,18 +1,23 @@
 import React, { useCallback, useEffect, useState, useRef } from "react";
 import { useDebounce } from "../../hooks/deboubce";
-import { getHighestAndLowest } from "../../hooks/get-lowest-and-highest";
-import { useAppSelector } from "../../hooks/reducer";
-//import { IMinMax } from "../../models/models";
+import { useAppDispatch, useAppSelector } from "../../hooks/reducer";
+import { changeMaxPrice, changeMinPrice } from "../../store/filterSlice";
+import { filterByPrice, getMemoizedMinMax, getMinMax } from "../../store/productsSlice";
 
 interface IFiltersSlider {
     eltClass: string;
     onFChange?: Function
 }
 
-export function FiltersSlider({eltClass, onFChange}: IFiltersSlider) {
-    const products = useAppSelector(state => state.products.products);
+export function FiltersSlider({eltClass}: IFiltersSlider) {
+    const dispatch = useAppDispatch();
+
+    const products = useAppSelector(state => state.products.initialProducts);
+    const cats = useAppSelector(state => state.filter.filterCategories);
+    const filteredMin = useAppSelector(state => state.filter.minPrice);
+    const filteredMax = useAppSelector(state => state.filter.maxPrice);
     
-    const {min, max} = getHighestAndLowest(products);
+    const {min, max} = useAppSelector(getMemoizedMinMax);
     const [minVal, setMinVal] = useState(min);
     const [maxVal, setMaxVal] = useState(max);
     const [minInputVal, setMinInputVal] = useState(min)
@@ -28,7 +33,16 @@ export function FiltersSlider({eltClass, onFChange}: IFiltersSlider) {
         setMaxVal(max);
         setMinInputVal(min);
         setMaxInputVal(max);
+        dispatch(changeMinPrice(min));
+        dispatch(changeMaxPrice(max));
     }, [min, max]);
+
+    useEffect(() => {
+        if (filteredMin === 0 && filteredMax === 0){
+            setMinInputVal(min);
+            setMaxInputVal(max);
+        }
+    }, [filteredMin, filteredMax])
 
     // перевод в проценты
     const getPercent = useCallback(
@@ -45,6 +59,8 @@ export function FiltersSlider({eltClass, onFChange}: IFiltersSlider) {
             range.current.style.left = `${minPercent}%`;
             range.current.style.width = `${maxPercent - minPercent}%`;
         }
+
+        dispatch(filterByPrice({min:minVal, max: maxValRef.current, cats: cats}))
     }, [minVal, getPercent]);
 
     // max val
@@ -55,6 +71,8 @@ export function FiltersSlider({eltClass, onFChange}: IFiltersSlider) {
         if (range.current) {
             range.current.style.width = `${maxPercent - minPercent}%`;
         }
+
+        dispatch(filterByPrice({min:minValRef.current, max: maxVal, cats: cats}))
     }, [maxVal, getPercent]);
 
     // input min change 
@@ -77,9 +95,21 @@ export function FiltersSlider({eltClass, onFChange}: IFiltersSlider) {
         setMaxInputVal(value);
     }, [debouncedMax])
 
-    useEffect(() => {
-        onFChange!({min: minVal, max: maxVal});
-    }, [minVal,maxVal]);
+    const minValHandler = (evt: React.ChangeEvent<HTMLInputElement>) => {
+        const value = Math.min(Number(evt.target.value), maxVal - 1);
+        setMinVal(value);
+        setMinInputVal(value)
+        minValRef.current = value;
+        dispatch(changeMinPrice(value));
+    };
+
+    const maxValHandler = (evt: React.ChangeEvent<HTMLInputElement>) => {
+        const value = Math.max(Number(evt.target.value), minVal + 1);
+        setMaxInputVal(value)
+        setMaxVal(value);
+        maxValRef.current = value;
+        dispatch(changeMaxPrice(value));
+    };
 
     return (
       <div className="filter__fieldset">
@@ -110,12 +140,7 @@ export function FiltersSlider({eltClass, onFChange}: IFiltersSlider) {
                         min={min}
                         max={max}
                         value={minVal}
-                        onChange={(event) => {
-                            const value = Math.min(Number(event.target.value), maxVal - 1);
-                            setMinVal(value);
-                            setMinInputVal(value)
-                            minValRef.current = value;
-                        }}
+                        onChange={(event) => minValHandler(event)}
                         className="range__handle"
                     />
                     <input 
@@ -123,19 +148,14 @@ export function FiltersSlider({eltClass, onFChange}: IFiltersSlider) {
                         min={min}
                         max={max}
                         value={maxVal}
-                        onChange={(event) => {
-                            const value = Math.max(Number(event.target.value), minVal + 1);
-                            setMaxInputVal(value)
-                            setMaxVal(value);
-                            maxValRef.current = value;
-                          }}
+                        onChange={(evt) => maxValHandler(evt)}
                         className="range__handle"
                     />
                     <div className="range__slider">
                         <div className="range__slider-track" />
                         <div ref={range} className="range__slider-range" />
-                        <div className="range__left-val">{minVal}</div>
-                        <div className="range__right-val">{maxVal}</div>
+                        <div className="range__left-val">{min}</div>
+                        <div className="range__right-val">{max}</div>
                     </div>
                 </div>
             </div>

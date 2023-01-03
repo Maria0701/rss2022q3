@@ -43,6 +43,10 @@
 
 .filter__checkbox:checked {
     border-color: var(--gray2);
+    background-image: url('img/tick.svg');
+    background-position: center;
+    background-size: 80%;
+    background-repeat: no-repeat;
 }
 
 .filter__prices {

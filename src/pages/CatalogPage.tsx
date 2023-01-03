@@ -44,13 +44,11 @@ export function CatalogPage() {
         <Filters eltClass="catalog__filters" />
         <div className="catalog__block">
           <div className="catalog__top">
-            <Tags/>
             <Sorting/>
           </div>
           <Catalog eltClass="catalog__catalog" products={products}/>
           <Pagination />
         </div>
-        <Container/>
       </div>
     </>
     );

@@ -52,6 +52,28 @@ export const productsSlice = createSlice({
                 state.products = state.initialProducts.filter(item => action.payload.min < item.price && action.payload.max > item.price);
                 state.filteredProducts = state.initialProducts.filter(item => action.payload.min < item.price && action.payload.max > item.price);
             }
+        },
+        sortProducts(state, action: PayloadAction<string>) {
+            if (action.payload === 'cheap') {
+                state.products = state.products.sort((a, b) => a.price - b.price);
+                state.filteredProducts = [...state.initialProducts].sort((a, b) => a.price - b.price);
+            }
+            if (action.payload === 'expensive') {
+                state.products = state.products.sort((a, b) => b.price - a.price);
+                state.filteredProducts = [...state.initialProducts].sort((a, b) => b.price - a.price);
+            }
+            if (action.payload === 'az') {
+                state.products = state.products.sort((a, b) => a.title.localeCompare(b.title));
+                state.filteredProducts = [...state.initialProducts].sort((a, b) => a.title.localeCompare(b.title));
+            }
+            if (action.payload === 'za') {
+                state.products = state.products.sort((a, b) => b.title.localeCompare(a.title));
+                state.filteredProducts = [...state.initialProducts].sort((a, b) => b.title.localeCompare(a.title));
+            }
+            if (action.payload === 'default') {
+                state.products = state.initialProducts;
+            }
+
         }
     }, extraReducers: (builder) => {
        builder
@@ -74,7 +96,7 @@ export const productsSlice = createSlice({
 });
 
 
-export const {filterByCategories, filterByPrice} = productsSlice.actions;
+export const {filterByCategories, filterByPrice, sortProducts} = productsSlice.actions;
 
 export default productsSlice.reducer;
 

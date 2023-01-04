@@ -34,7 +34,7 @@ export function ProductCard ({product}: IProductProps) {
   const isDisabled:boolean = count ? false : true;
 
   return (
-    <div className="product-card">
+    <div className="product-card" data-id={product.id}>
       <div className="product-card__img" onClick={clickHandler}>
         <img src={product.images[0]} alt={product.title} />
       </div>

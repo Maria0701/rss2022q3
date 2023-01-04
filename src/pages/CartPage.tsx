@@ -27,7 +27,7 @@ export function CartPage() {
     return (
         <>
             <div className="container cart__container">
-                <H1Elt eltClass="catalog__h1" />
+                <H1Elt eltClass="catalog__h1" text='Cart'/>
                 <table className={`cart__table ${checkoutState}`}>
                     <thead>
                         <tr>

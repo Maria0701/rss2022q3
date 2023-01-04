@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from "react"
+import React, { useEffect} from "react"
 import { BreadCrumbs } from "../components/breadcrumbs/BreadCrumbs";
 import { H1Elt } from "../components/h1/H1";
 import { Filters } from "../components/filters/Filters";
@@ -6,10 +6,10 @@ import { Sorting } from "../components/sorting/Sorting";
 import { Catalog } from "../components/catalog/Catalog";
 import { Pagination } from "../components/pagination/Pagination";
 import { BREADCRUMBS_LINKS } from "../jsons/links";
-import './catalog-page.css'
 import { useAppDispatch, useAppSelector } from "../hooks/reducer";
 import { fetchProductsThunkPerPage } from "../store/productsSlice";
-import { changeGoodsPerPage, changeNumberOfPages, changePage, getSkiped } from "../store/paginationSlice";
+import { changeGoodsPerPage, changePage, getSkiped } from "../store/paginationSlice";
+import './catalog-page.css'
 
 const POSTS_PER_PAGE = 15;
 
@@ -40,6 +40,8 @@ export function CatalogPage() {
     const toSkip = skip(currentPageStored, postsPerPageStored)
     dispatch(fetchProductsThunkPerPage({limit: postsPerPageStored, skip: toSkip}));
   }, [dispatch]);
+
+  const getPageNumText = currentPageStored > 1 ? currentPageStored : '';
   
     return (
     <>
@@ -49,7 +51,7 @@ export function CatalogPage() {
         <BreadCrumbs links={BREADCRUMBS_LINKS}/>
       </div>
       <div className="container catalog__container">
-        <H1Elt eltClass="catalog__h1" />
+        <H1Elt eltClass="catalog__h1" text={`Catalog ${getPageNumText}`} />
         <Filters eltClass="catalog__filters" />
         <div className="catalog__block">
           <div className="catalog__top">

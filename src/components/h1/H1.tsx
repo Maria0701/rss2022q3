@@ -1,10 +1,11 @@
 import './h1.css'
 interface ISearch {
-  eltClass: string
+  eltClass: string,
+  text: string,
 }
 
-export function H1Elt({eltClass}: ISearch) {
+export function H1Elt({eltClass, text}: ISearch) {
   return (
-    <h1 className={`h1 ${eltClass}`}>Catalog</h1>
+    <h1 className={`h1 ${eltClass}`}>{text}</h1>
   )
 }

@@ -1,13 +1,12 @@
 import { useEffect, useState} from "react";
 import { useAppDispatch, useAppSelector } from '../../hooks/reducer';
-import {IMinMax} from '../../models/models';
 import { FiltersFieldset } from './Filtersfieldset';
 import { FiltersSlider } from './FiltersSlider';
 import './filters.css'
 import React from 'react';
 import { Btn } from '../btns/btn';
 import { clearFilter } from '../../store/filterSlice';
-import { getMemoizedMinMax } from "../../store/productsSlice";
+import { filterByPrice, getMemoizedMinMax } from "../../store/productsSlice";
 
 
 interface IFiltersElt {
@@ -28,6 +27,7 @@ export function Filters({eltClass}: IFiltersElt) {
     } else {
       setWasFiltered(false)
     }
+    dispatch(filterByPrice({min:filteredMin, max: filteredMax, cats: cats}))
   }, [filteredMin, filteredMax, cats]);
 
 

@@ -38,19 +38,11 @@ export const productsSlice = createSlice({
     name: 'products',
     initialState: initialState,
     reducers: {
-        filterByCategories(state, action:PayloadAction<string[]>) {
-            if (action.payload.length !== 0) {
-                state.products = state.filteredProducts.filter(item => action.payload.includes(item.category))
-            } else {
-                state.products = state.filteredProducts;
-            }
-        },
         filterByPrice(state, action: PayloadAction<{min: number, max: number, cats: string[]}>) {
             if (action.payload.cats.length > 0) {
-                state.products = state.initialProducts.filter(item => action.payload.min < item.price && action.payload.max > item.price && action.payload.cats.includes(item.category));
+                state.products = state.filteredProducts.filter(item => action.payload.min < item.price && action.payload.max > item.price && action.payload.cats.includes(item.category));
             } else {
-                state.products = state.initialProducts.filter(item => action.payload.min < item.price && action.payload.max > item.price);
-                state.filteredProducts = state.initialProducts.filter(item => action.payload.min < item.price && action.payload.max > item.price);
+                state.products = state.filteredProducts.filter(item => action.payload.min < item.price && action.payload.max > item.price);
             }
         },
         sortProducts(state, action: PayloadAction<string>) {
@@ -96,7 +88,7 @@ export const productsSlice = createSlice({
 });
 
 
-export const {filterByCategories, filterByPrice, sortProducts} = productsSlice.actions;
+export const {filterByPrice, sortProducts} = productsSlice.actions;
 
 export default productsSlice.reducer;
 

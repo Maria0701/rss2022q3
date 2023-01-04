@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState, useRef } from "react";
 import { useDebounce } from "../../hooks/deboubce";
 import { useAppDispatch, useAppSelector } from "../../hooks/reducer";
 import { changeMaxPrice, changeMinPrice } from "../../store/filterSlice";
+
 import { filterByPrice, getMemoizedMinMax, getMinMax } from "../../store/productsSlice";
 
 interface IFiltersSlider {
@@ -11,11 +12,8 @@ interface IFiltersSlider {
 
 export function FiltersSlider({eltClass}: IFiltersSlider) {
     const dispatch = useAppDispatch();
-
-    const cats = useAppSelector(state => state.filter.filterCategories);
     const filteredMin = useAppSelector(state => state.filter.minPrice);
-    const filteredMax = useAppSelector(state => state.filter.maxPrice);
-    
+    const filteredMax = useAppSelector(state => state.filter.maxPrice);    
     const {min, max} = useAppSelector(getMemoizedMinMax);
     const [minVal, setMinVal] = useState(min);
     const [maxVal, setMaxVal] = useState(max);
@@ -32,7 +30,7 @@ export function FiltersSlider({eltClass}: IFiltersSlider) {
         setMaxVal(max);
         setMinInputVal(min);
         setMaxInputVal(max);
-        dispatch(changeMinPrice(min));
+        dispatch(changeMinPrice (min));
         dispatch(changeMaxPrice(max));
     }, [min, max]);
 
@@ -40,6 +38,8 @@ export function FiltersSlider({eltClass}: IFiltersSlider) {
         if (filteredMin === 0 && filteredMax === 0){
             setMinInputVal(min);
             setMaxInputVal(max);
+            dispatch(changeMinPrice (min));
+            dispatch(changeMaxPrice(max));
         }
     }, [filteredMin, filteredMax])
 
@@ -59,7 +59,6 @@ export function FiltersSlider({eltClass}: IFiltersSlider) {
             range.current.style.width = `${maxPercent - minPercent}%`;
         }
 
-        dispatch(filterByPrice({min:minVal, max: maxValRef.current, cats: cats}))
     }, [minVal, getPercent]);
 
     // max val
@@ -70,8 +69,6 @@ export function FiltersSlider({eltClass}: IFiltersSlider) {
         if (range.current) {
             range.current.style.width = `${maxPercent - minPercent}%`;
         }
-
-        dispatch(filterByPrice({min:minValRef.current, max: maxVal, cats: cats}))
     }, [maxVal, getPercent]);
 
     // input min change 

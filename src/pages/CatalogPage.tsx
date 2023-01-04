@@ -10,7 +10,7 @@ import { Pagination } from "../components/pagination/Pagination";
 import { BREADCRUMBS_LINKS } from "../jsons/links";
 import './catalog-page.css'
 import { useAppDispatch, useAppSelector } from "../hooks/reducer";
-import { filterByCategories, fetchProductsThunk } from "../store/productsSlice";
+import { fetchProductsThunk } from "../store/productsSlice";
 
 
 export function CatalogPage() {
@@ -26,11 +26,6 @@ export function CatalogPage() {
   useEffect(() => {
     dispatch(fetchProductsThunk());
   }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(filterByCategories(filtersApplied.filterCategories));
-  }, [filtersApplied.filterCategories]);
-
   
     return (
     <>

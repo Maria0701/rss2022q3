@@ -11,7 +11,8 @@ export function CartPage() {
     
     const totalPrice = useAppSelector(getTotalPrice);
     const checkoutState = useAppSelector(state => state.cart.checkoutState)
-    const removeFromCardFn = (id:number) => dispatch(removeFromCard(id))
+    const removeFromCardFn = (id:number) => dispatch(removeFromCard(id));
+
     const quantityChangeHandler = (e: React.FocusEvent<HTMLInputElement>, id: number) => {
         const quantity = Number(e.target.value) || 0;
         dispatch(updateQuantity({id, quantity}));

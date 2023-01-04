@@ -1,5 +1,5 @@
 import { createSelector, createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit"
-import { RootState, AppDispatch } from "./store";
+import { RootState} from "./store";
 import { checkout } from "../jsons/fakes";
 
 export interface CartItem {
@@ -59,7 +59,8 @@ const cartSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(checkoutThunk.pending, (state) => {
             state.checkoutState = 'Loading';
-         }),
+            return
+        }),
         builder.addCase(checkoutThunk.fulfilled, (state, action: PayloadAction<{success: boolean}>) => {
             const {success} = action.payload;
             if (success) {
@@ -92,6 +93,6 @@ export const getMemoizedNumItems = createSelector(
 
 export const getTotalPrice = createSelector(
     (state: RootState) => state.cart.items,
-    (state: RootState) => state.products.products,
-    (items, products) => items.reduce((result, current) => result + current.quantity*products[current.id].price, 0).toFixed(2),
+    (state: RootState) => state.products.initialProducts,
+    (items, initialProducts) => items.reduce((result, current) => result + current.quantity*initialProducts[current.id].price, 0).toFixed(2),
 )

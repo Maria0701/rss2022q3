@@ -5,7 +5,7 @@ import { getTotalPrice, removeFromCard, updateQuantity, checkoutThunk } from "..
 
 export function CartPage() {
     const dispatch = useAppDispatch();
-    const products = useAppSelector((state) => state.products.products);
+    const products = useAppSelector((state) => state.products.initialProducts);
     const items = useAppSelector((state) => state.cart.items);
     const errorMessage = useAppSelector(state => state.cart.errorMessage);
     

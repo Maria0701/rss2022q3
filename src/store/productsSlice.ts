@@ -10,6 +10,7 @@ interface ProductsState {
     products: IProductCard[];
     filteredProducts: IProductCard[];
     initialProducts: IProductCard[];
+    numOfProds: number;
 }
 
 const initialState: ProductsState = {
@@ -18,15 +19,17 @@ const initialState: ProductsState = {
     products: [],
     filteredProducts:[],
     initialProducts: [],
+    numOfProds: 0,
 };
 
 export const fetchProductsThunk = createAsyncThunk(
     'products/fetchproducts',
     async () => {
         try {
-            const response = await fetch(`${baseURL }products`)
+            const response = await fetch(`${baseURL }products?limit=100&skip=0`)
             .then(res => res.json());
-            return response.products;
+            console.log(response)
+            return response;
         } catch (err) {
             return err;
         }
@@ -65,7 +68,6 @@ export const productsSlice = createSlice({
             if (action.payload === 'default') {
                 state.products = state.initialProducts;
             }
-
         }
     }, extraReducers: (builder) => {
        builder
@@ -73,10 +75,11 @@ export const productsSlice = createSlice({
             state.loading = true;
             state.error = '';
         })
-        .addCase(fetchProductsThunk.fulfilled, (state, action:PayloadAction<IProductCard[]>) => {
-            state.products = action.payload;
-            state.filteredProducts = action.payload;
-            state.initialProducts = action.payload;
+        .addCase(fetchProductsThunk.fulfilled, (state, action:PayloadAction<{products:IProductCard[], total: number}>) => {
+            state.products = action.payload.products;
+            state.filteredProducts = action.payload.products;
+            state.initialProducts = action.payload.products;
+            state.numOfProds = action.payload.total;
             state.loading = false;
             state.error = '';
         })

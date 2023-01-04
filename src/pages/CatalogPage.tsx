@@ -40,6 +40,8 @@ export function CatalogPage() {
     const toSkip = skip(currentPageStored, postsPerPageStored)
     dispatch(fetchProductsThunkPerPage({limit: postsPerPageStored, skip: toSkip}));
   }, [dispatch]);
+
+  const getPageNumText = currentPageStored > 1 ? currentPageStored : '';
   
     return (
     <>
@@ -49,7 +51,7 @@ export function CatalogPage() {
         <BreadCrumbs links={BREADCRUMBS_LINKS}/>
       </div>
       <div className="container catalog__container">
-        <H1Elt eltClass="catalog__h1" />
+        <H1Elt eltClass="catalog__h1" text={`Catalog ${getPageNumText}`} />
         <Filters eltClass="catalog__filters" />
         <div className="catalog__block">
           <div className="catalog__top">

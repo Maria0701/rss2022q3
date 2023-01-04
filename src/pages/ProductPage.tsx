@@ -1,5 +1,6 @@
 import React, { useEffect} from "react"
 import { useParams } from "react-router-dom";
+import { H1Elt } from "../components/h1/H1";
 import { useAppDispatch, useAppSelector } from "../hooks/reducer";
 import { fetchSingleProduct } from "../store/productSlice";
 
@@ -15,12 +16,13 @@ export function ProductPage() {
     dispatch(fetchSingleProduct(Number(params.id)));
   }, [dispatch]);
   
+  console.log(product);
 
     return (
     <div className="container">
       { loading && <p>Application is loading</p> }
       { error && <p>Something went wrong</p>}
-      <h1>{product.title}</h1>
+      <H1Elt eltClass="product__h1" text={product.title} />
     </div>
     );
 };

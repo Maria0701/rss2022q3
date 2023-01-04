@@ -36,7 +36,6 @@ export function CatalogPage() {
 
   useEffect(() => {
     dispatch(changeGoodsPerPage(POSTS_PER_PAGE));
-    console.log(currentPageStored);
     const toSkip = skip(currentPageStored, postsPerPageStored)
     dispatch(fetchProductsThunkPerPage({limit: postsPerPageStored, skip: toSkip}));
   }, [dispatch]);

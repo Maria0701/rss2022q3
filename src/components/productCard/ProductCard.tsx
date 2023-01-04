@@ -4,10 +4,10 @@ import './productCard.css';
 import { IProductCard } from "../../models/models";
 import { Btn } from "../btns/btn";
 import { addToCart } from "../../store/cartSlice";
-// import { AddProductToCart } from "../addProductToCart/AddProductToCart"
 import { useNavigate } from "react-router-dom";
 import { CountOfProduct } from "../countOfProduct/CountOfProduct";
-import { useAppDispatch } from "../../hooks/reducer";
+import { useAppDispatch, useAppSelector } from "../../hooks/reducer";
+import { showModal } from "../../store/modalSlice";
 
 interface IProductProps {
   product: IProductCard
@@ -15,9 +15,8 @@ interface IProductProps {
 
 export function ProductCard ({product}: IProductProps) {
   const dispatch = useAppDispatch();
-  const [details, setDetails] = useState(false)
-  const navigate = useNavigate()
-  const btnClassName = details ? "add-yellow product-card__btn ": "product-card__btn";
+  const navigate = useNavigate();
+  const cartItems = useAppSelector((state) => state.cart.items);
 
   const clickHandler = () => navigate(`products/${product.id}`)
 
@@ -31,6 +30,12 @@ export function ProductCard ({product}: IProductProps) {
     setCount((el) => el += 1)
   };
 
+  const getCartText = cartItems.length > 0 && cartItems.find((item) => item.id === product.id) ? 'In Cart' : 'Add to Cart';
+
+  const detailedCardHandler = (evt: React.MouseEvent<HTMLButtonElement>, id:number) => {
+    dispatch(showModal({isHidden: true, id: id}));
+  };
+
   const isDisabled:boolean = count ? false : true;
 
   return (
@@ -42,16 +47,11 @@ export function ProductCard ({product}: IProductProps) {
         <div className="product-card__rating">Rate: <span >{product.rating.rate}</span></div>
         <p  className="product-card__name">{product.title}</p>
         <span className="product-card__price">{product.price}$</span>
-        <Btn eltClass={btnClassName} onClick={() => setDetails(prev => !prev)} btnText={details ? 'Hide details': "Show details"}/>
+        <Btn eltClass='product-card__btn' onClick={(evt) => detailedCardHandler(evt, product.id)} btnText={"Show details"}/>
       </div>
-      { details && 
-            <div className="product-card__description">
-                <div>{product.description}</div>
-          </div>
-        }
       <div className="product__actions">
         <CountOfProduct count={count} decreaseCount={decreaseCount} increaseCount={increaseCount}/>
-        <Btn eltClass='btn__addToCart' btnText='В корзину' isDisabled={isDisabled} onClick={() => dispatch(addToCart({id: product.id, count: count}))}/>
+        <Btn eltClass='btn__addToCart' btnText={getCartText} isDisabled={isDisabled} onClick={() => dispatch(addToCart({id: product.id, count: count}))}/>
       </div>
     </div>
 

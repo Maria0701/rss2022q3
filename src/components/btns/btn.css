@@ -10,17 +10,24 @@
 }
 
 .btn--main {
-    padding: 12px 20px;
-    color: var(--white);
-    background: var(--btn-liner);
-    border-radius: 8px;
-    border: 0;
+  padding: 12px 20px;
+  color: var(--white);
+  border-radius: 8px;
+  border: 0;
+  background: linear-gradient(180deg, var(--blue) 0%, var(--blue2) 100%);
+  transition: --blue 0.3s, --blue2 0.3s;
+}
+
+.btn--main:hover,
+.btn--main:focus {
+  --blue: #00347E;
+  --blue2: #0044A4;
 }
 
 .btn--main:disabled {
   background: var(--grey2);
 }
-  
+
 .btn--add {
   width: 18px;
   font-size: 16px;

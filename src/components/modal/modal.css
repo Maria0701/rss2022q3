@@ -1,0 +1,147 @@
+@keyframes fadeout {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+@keyframes fadein{
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.fadeout {
+    animation: fadeout 0.4s ease-in-out;
+}
+
+.fadein {
+    animation: fadein 0.4s ease-in-out;
+}
+
+.popup {
+    position: fixed;
+    top: -10000px;
+    left: 50%;
+    z-index: 1;
+    width: calc(100% - 32px);
+    max-width: 593px;
+    max-height: 100vh;
+    padding: 12px;
+    transform: translate(-50%, -50%);
+    background-color: var(--white);
+}
+
+.popup__form {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+}
+
+@media (max-width: 600px) {
+    .popup__form .comment-form {
+        row-gap: 12px;
+    }
+}
+.popup-overlay {
+    position: fixed;
+    top: 100%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 12;
+    background-color: rgba(0,0,0, 0.5);
+}
+
+.popup-overlay {
+    top: 0;
+}
+
+.popup {
+    top: 50%;
+}
+
+.popup__wrapper {
+    position: relative;
+    padding: 24px;
+    width: 100%;
+    height: 100%;
+    
+    border: 1px solid var(--dark-gray);
+}
+
+.popup--success .popup__wrapper {
+    display: grid;
+    grid-template-columns: minmax(0,1fr);
+    justify-content: center;
+    justify-items: center;
+}
+
+.popup__close {
+    position: absolute;
+    top: -48px;
+    right: -16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    color: var(--dark-gray);
+    background-color: var(--white);
+    border-radius: 50%;
+}
+
+.popup__head {
+    margin-bottom: 24px;
+    color: var(--dark-gray)
+}
+
+.popup__name {
+    margin: 0;
+    font-family: Times, serif;
+    font-size: 1.2rem;
+    line-height: 130%;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.popup__remark {
+    padding-top: 12px;
+
+}
+
+.popup--success .popup__remark {
+    text-align: center;
+}
+
+.popup__svg {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 24px;
+}
+
+@media (min-width: 700px) {
+    .popup__wrapper {
+        padding-left: 50px;
+        padding-right: 50px;
+        padding-top: 36px;
+        padding-bottom: 36px;
+    }
+
+    .popup__name {
+        font-size: 2.25rem;
+    }
+
+    .popup__head  {
+        margin-bottom: 2.25rem;
+    }
+
+    .popup__close {
+        top: -40px;
+        right: -40px;
+    }
+
+    .popup--success .comment-form__btn {
+        width: 132px;
+    }
+
+    .popup__svg {
+        margin-bottom: 48px;
+    }
+}

@@ -4,6 +4,7 @@ import categoriesReducer from './categoriesSlice';
 import cartReducer from './cartSlice';
 import filterReducer from './filterSlice';
 import paginationReducer from './paginationSlice';
+import productReducer from './productSlice';
 
 const rootReducer = combineReducers({
     products: productsReducer,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
     cart: cartReducer,
     filter: filterReducer,
     pagination: paginationReducer,
+    product: productReducer,
 });
 
 export function setupStore() {

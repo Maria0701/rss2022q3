@@ -22,6 +22,20 @@ export interface IProductCard{
   }
 }
 
+export interface ISingleProduct {
+  id: number;
+  title: string;
+  description: string;
+  price: number;
+  discountPercentage: number;
+  rating: number;
+  stock: number;
+  brand: string;
+  category: string;
+  thumbnail: string;
+  images: string[];
+}
+
 export interface ServerResponse<T> {
   limit: number;
   products: T[];

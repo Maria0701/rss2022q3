@@ -24,11 +24,26 @@ const initialState: ProductsState = {
 
 export const fetchProductsThunk = createAsyncThunk(
     'products/fetchproducts',
-    async () => {
+    async ({limit, skip}: {limit: number, skip:number}, thunkAPI) => {
+        //const state = thunkAPI.getState() as RootState;
         try {
-            const response = await fetch(`${baseURL }products?limit=100&skip=0`)
+            const response = await fetch(`${baseURL}products?limit=${limit}&skip=${skip}`)
             .then(res => res.json());
-            console.log(response)
+            return response;
+        } catch (err) {
+            return err;
+        }
+        
+    }
+)
+
+export const fetchProductsThunkPerPage = createAsyncThunk(
+    'products/fetchproducts/paginate',
+    async ({limit, skip}: {limit: number, skip:number}, thunkAPI) => {
+        //const state = thunkAPI.getState() as RootState;
+        try {
+            const response = await fetch(`${baseURL}products?limit=${limit}&skip=${skip}`)
+            .then(res => res.json());
             return response;
         } catch (err) {
             return err;
@@ -87,6 +102,19 @@ export const productsSlice = createSlice({
             state.loading = false;
             state.error = 'Error';
         })
+        .addCase(fetchProductsThunkPerPage.pending, (state) => {
+            state.loading = true;
+            state.error = '';
+        })
+        .addCase(fetchProductsThunkPerPage.fulfilled, (state, action:PayloadAction<{products:IProductCard[], total: number}>) => {
+            state.products = action.payload.products;
+            state.loading = false;
+            state.error = '';
+        })
+        .addCase(fetchProductsThunkPerPage.rejected, (state, action) => {
+            state.loading = false;
+            state.error = 'Error';
+        })
     }
 });
 
@@ -98,7 +126,6 @@ export default productsSlice.reducer;
 export function getMinMax(state: RootState) {
     return getHighestAndLowest(state.products.initialProducts);
 }
-
 
 export const getMemoizedMinMax = createSelector(
     (state: RootState) => state.products.initialProducts,

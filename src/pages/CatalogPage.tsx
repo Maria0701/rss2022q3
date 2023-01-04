@@ -1,30 +1,44 @@
-import React, { useEffect} from "react"
-import { Container } from "../components/container/Container";
+import React, { useEffect, useState} from "react"
 import { BreadCrumbs } from "../components/breadcrumbs/BreadCrumbs";
 import { H1Elt } from "../components/h1/H1";
 import { Filters } from "../components/filters/Filters";
 import { Sorting } from "../components/sorting/Sorting";
-import { Tags } from "../components/tags/Tags";
 import { Catalog } from "../components/catalog/Catalog";
 import { Pagination } from "../components/pagination/Pagination";
 import { BREADCRUMBS_LINKS } from "../jsons/links";
 import './catalog-page.css'
 import { useAppDispatch, useAppSelector } from "../hooks/reducer";
-import { fetchProductsThunk } from "../store/productsSlice";
+import { fetchProductsThunkPerPage } from "../store/productsSlice";
+import { changeGoodsPerPage, changeNumberOfPages, changePage, getSkiped } from "../store/paginationSlice";
+
+const POSTS_PER_PAGE = 15;
 
 
 export function CatalogPage() {
 
   const dispatch = useAppDispatch()
-  
   const products = useAppSelector(state => state.products.products);
   const errorProducts = useAppSelector(state => state.products.error);
   const loading = useAppSelector(state => state.products.loading);
-  const filtersApplied = useAppSelector(state => state.filter);
-  
+  const totalItems = useAppSelector((state) => state.products.numOfProds);
+  const currentPageStored = useAppSelector((state) => state.pagination.currentPage);
+  const postsPerPageStored = useAppSelector((state) => state.pagination.goodsPerPage)
+
+  const skip = (curr:number, perPage: number) => {
+    return (curr - 1) * perPage;
+  }
+
+  const paginate = (pageNumber: number) => {
+    dispatch(changePage(pageNumber));
+    const toSkip = skip(pageNumber, postsPerPageStored)
+    dispatch(fetchProductsThunkPerPage({limit: postsPerPageStored, skip: toSkip}));
+  };
 
   useEffect(() => {
-    dispatch(fetchProductsThunk());
+    dispatch(changeGoodsPerPage(POSTS_PER_PAGE));
+    console.log(currentPageStored);
+    const toSkip = skip(currentPageStored, postsPerPageStored)
+    dispatch(fetchProductsThunkPerPage({limit: postsPerPageStored, skip: toSkip}));
   }, [dispatch]);
   
     return (
@@ -42,7 +56,7 @@ export function CatalogPage() {
             <Sorting/>
           </div>
           <Catalog eltClass="catalog__catalog" products={products}/>
-          <Pagination />
+          <Pagination postsPerPage={postsPerPageStored} totalPosts={totalItems} paginate={paginate} currentPage={currentPageStored}/>
         </div>
       </div>
     </>

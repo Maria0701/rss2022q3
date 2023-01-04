@@ -8,7 +8,7 @@ export function CartPage() {
     const products = useAppSelector((state) => state.products.initialProducts);
     const items = useAppSelector((state) => state.cart.items);
     const errorMessage = useAppSelector(state => state.cart.errorMessage);
-    
+
     const totalPrice = useAppSelector(getTotalPrice);
     const checkoutState = useAppSelector(state => state.cart.checkoutState)
     const removeFromCardFn = (id:number) => dispatch(removeFromCard(id));

@@ -14,7 +14,7 @@ import { fetchProductsThunk } from './store/productsSlice';
 //  https://dummyjson.com/products , https://api.storerestapi.com/products
 
 const store = setupStore();
-store.dispatch(fetchProductsThunk);
+store.dispatch(fetchProductsThunk({limit: 100, skip: 0}));
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );

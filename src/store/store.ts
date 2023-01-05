@@ -7,6 +7,7 @@ import paginationReducer from './paginationSlice';
 import productReducer from './productSlice';
 import modalReducer from './modalSlice';
 import modalReducer2 from './modalSlice2';
+import searchReducer from './searchSlice';
 
 const rootReducer = combineReducers({
     products: productsReducer,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
     product: productReducer,
     modal: modalReducer,
     modal2: modalReducer2,
+    search: searchReducer,
 });
 
 export function setupStore() {

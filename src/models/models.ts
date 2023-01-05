@@ -13,7 +13,6 @@ export interface IProductCard{
   id: number,
   title: string,
   price: number,
-  description: string,
   category: string,
   thumbnail: string,
   rating: number,
@@ -33,6 +32,8 @@ export interface ISingleProduct {
   thumbnail: string;
   images: string[];
 }
+
+export type ISearchProduct = Pick<ISingleProduct, "id" | "title" | 'price'>;
 
 export interface ServerResponse<T> {
   limit: number;

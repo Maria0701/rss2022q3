@@ -54,4 +54,5 @@ export const CATEGORIES:ICats = {
 export const SHOP_CURRENCY = '$';
 
 export const KEY_NAME_ESC = 'Escape';
+export const KEY_NAME_ENTER = 'Enter';
 export const KEY_EVENT_TYPE = 'keyup';

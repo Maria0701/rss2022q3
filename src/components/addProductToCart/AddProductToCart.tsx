@@ -2,8 +2,19 @@ import './addProductToCart.css'
 import { CountOfProduct } from '../countOfProduct/CountOfProduct'
 import { Btn } from '../btns/btn'
 import { useState } from 'react'
+import { addToCart } from '../../store/cartSlice'
+import { useAppDispatch, useAppSelector } from '../../hooks/reducer'
+import { showModal2 } from '../../store/modalSlice2'
 
-export function AddProductToCart () {
+interface IAddToCart {
+  id: number,
+  text: string,
+  title: string,
+  price: number
+}
+
+export function AddProductToCart ({id, text, title, price}: IAddToCart) {
+  const dispatch = useAppDispatch();
   const [count, setCount] = useState(1)
 
   const decreaseCount = (): void => {
@@ -14,13 +25,18 @@ export function AddProductToCart () {
     setCount((el) => el += 1)
   };
 
+  const onClick= () => {
+    dispatch(addToCart({id: id, count: count}));
+    dispatch(showModal2({isHidden2: true, count: count, title: title, price: price}));
+  }
+
   const isDisabled:boolean = count ? false : true;
   const styleBtn = 'btn__addToCart';
 
   return (
     <div className="product__actions">
       <CountOfProduct count={count} decreaseCount={decreaseCount} increaseCount={increaseCount}/>
-      <Btn eltClass={styleBtn} btnText='В корзину' isDisabled={isDisabled}/>
+      <Btn eltClass={styleBtn} btnText={text} isDisabled={isDisabled} onClick={onClick}/>
     </div>
   )
 }

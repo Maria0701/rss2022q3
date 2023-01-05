@@ -8,7 +8,7 @@ import { Pagination } from "../components/pagination/Pagination";
 import { BREADCRUMBS_LINKS } from "../jsons/links";
 import { useAppDispatch, useAppSelector } from "../hooks/reducer";
 import { fetchProductsThunkPerPage } from "../store/productsSlice";
-import { changeGoodsPerPage, changePage, getSkiped } from "../store/paginationSlice";
+import { changeGoodsPerPage, changePage, getSkipped } from "../store/paginationSlice";
 import './catalog-page.css'
 
 const POSTS_PER_PAGE = 15;
@@ -36,7 +36,6 @@ export function CatalogPage() {
 
   useEffect(() => {
     dispatch(changeGoodsPerPage(POSTS_PER_PAGE));
-    console.log(currentPageStored);
     const toSkip = skip(currentPageStored, postsPerPageStored)
     dispatch(fetchProductsThunkPerPage({limit: postsPerPageStored, skip: toSkip}));
   }, [dispatch]);

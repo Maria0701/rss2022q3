@@ -10,7 +10,7 @@ export interface PaginationState {
 const initialState:PaginationState = {
     currentPage: 1,
     totalPages: 1,
-    goodsPerPage: 10
+    goodsPerPage: 15,
 }
 
 
@@ -33,7 +33,7 @@ const paginationSlice = createSlice({
 export const {changePage, changeNumberOfPages, changeGoodsPerPage} = paginationSlice.actions;
 export default paginationSlice.reducer;
 
-export function getSkiped(state: RootState) {
+export function getSkipped(state: RootState) {
     console.log((state.pagination.currentPage - 1) * state.pagination.goodsPerPage);
     return (state.pagination.currentPage - 1) * state.pagination.goodsPerPage;
 };

@@ -67,6 +67,4 @@ export const productSlice = createSlice ({
     }
 });
 
-// export const {filterByPrice, sortProducts} = productSlice.actions;
-
 export default productSlice.reducer;

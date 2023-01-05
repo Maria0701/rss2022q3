@@ -1,0 +1,32 @@
+.cart__table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.cart__table th:first-child {
+    text-align: left;
+}
+
+.cart__table td:not(:first-child) {
+    text-align: center;
+}
+
+.cart__table td {
+    padding-bottom: 8px;
+}
+
+.cart__count,
+.cart__btn {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cart__total {
+    font-weight: bold;
+}
+
+.cart__form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}

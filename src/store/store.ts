@@ -5,6 +5,8 @@ import cartReducer from './cartSlice';
 import filterReducer from './filterSlice';
 import paginationReducer from './paginationSlice';
 import productReducer from './productSlice';
+import modalReducer from './modalSlice';
+import modalReducer2 from './modalSlice2';
 
 const rootReducer = combineReducers({
     products: productsReducer,
@@ -13,6 +15,8 @@ const rootReducer = combineReducers({
     filter: filterReducer,
     pagination: paginationReducer,
     product: productReducer,
+    modal: modalReducer,
+    modal2: modalReducer2,
 });
 
 export function setupStore() {

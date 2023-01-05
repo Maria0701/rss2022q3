@@ -1,15 +1,16 @@
 import { ChangeEvent, useState, useEffect } from 'react'
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDebounce } from '../../hooks/deboubce';
 import { useAppDispatch, useAppSelector } from '../../hooks/reducer';
 import { KEY_NAME_ENTER, SHOP_CURRENCY } from '../../jsons/links';
 import { searchProducts } from '../../store/searchSlice';
-
 import search from './img/search.png'
 import './searchHeader.css'
+
 interface ISearch {
   styleSearch: string
 }
+
 export function SearchHeader({styleSearch}: ISearch) {
   const [searchItem, setSearchItem] = useState(true);
   const [value, setValue] = useState('');
@@ -35,8 +36,6 @@ export function SearchHeader({styleSearch}: ISearch) {
       setDropdown(false);
     }
   }, [debounced]);
-
-  console.log(searched, 3);
 
   const clickHandler = (id:number) => {
     navigate(`/products/${id}`);

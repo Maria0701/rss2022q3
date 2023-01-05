@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import React, { useEffect, useRef } from "react"
 import './modal.css';
 import './short-prod.css';
 import { useNavigate } from "react-router-dom";
@@ -6,16 +6,18 @@ import { useAppDispatch, useAppSelector } from "../../hooks/reducer";
 import { hideModal } from "../../store/modalSlice";
 import { fetchSingleProduct } from "../../store/productSlice";
 import { AddProductToCart } from "../addProductToCart/AddProductToCart";
-import { CATEGORIES, SHOP_CURRENCY } from "../../jsons/links";
+import { CATEGORIES, KEY_NAME_ESC, SHOP_CURRENCY } from "../../jsons/links";
 
 export function Modal () {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();  
-  //const loading = useAppSelector((state) => state.product.loading);
-  //const error = useAppSelector((state) => state.product.error);
+  const navigate = useNavigate(); 
+  const modalEl = useRef<HTMLElement>(null);
+  const loading = useAppSelector((state) => state.product.loading);
+  const error = useAppSelector((state) => state.product.error);
   const product = useAppSelector((state) => state.product.product);
   const prodId = useAppSelector((state) => state.modal.prodId);
   const cartItems = useAppSelector((state) => state.cart.items);
+  const isModalOpened = useAppSelector((state) => state.modal.isHidden);
   const hideModalHandler = () => dispatch(hideModal({isHidden: false, id: 0}));
 
     useEffect (() => {
@@ -23,6 +25,26 @@ export function Modal () {
             dispatch(fetchSingleProduct(prodId));
         }
     }, [prodId, dispatch]);
+
+    useEffect(() => {
+        const checkIfClickedOutside = (e: MouseEvent) => {
+            if (isModalOpened && modalEl.current && !modalEl.current.contains(e.target as HTMLElement)) {
+                hideModalHandler();
+            }
+        }
+        document.addEventListener("mousedown", checkIfClickedOutside)
+        const close = (e: KeyboardEvent) => {
+            if(e.key === KEY_NAME_ESC) {
+                hideModalHandler()
+            }
+        }
+        window.addEventListener('keydown', close);
+
+        return () => {
+            document.removeEventListener("mousedown", checkIfClickedOutside)
+            window.removeEventListener('keydown', close);
+        };
+    }, []);
 
     const getCartText = cartItems.length > 0 && cartItems.find((item) => item.id === product.id) ? 'In Cart' : 'Add to Cart';
     const clickHandler = () => {
@@ -33,7 +55,9 @@ export function Modal () {
 
   return (
     <div className="popup-overlay">
-        <section className="popup">
+        <section className="popup" ref={modalEl}>
+        { loading && <p>Application is loading</p> }
+        { error && <p>Something went wrong</p>}
             <div className="popup__wrapper">
                 <button className="btn popup__close" onClick={hideModalHandler}>
                     x

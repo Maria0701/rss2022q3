@@ -15,7 +15,6 @@ const initialState: IModalState2 = {
     price: 0
 };
 
-
 export const modalSlice2 = createSlice ({
     name: 'modal2',
     initialState: initialState,

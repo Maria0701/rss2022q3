@@ -2,7 +2,9 @@ import { ChangeEvent, useState, useEffect } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useDebounce } from '../../hooks/deboubce';
 import { useAppDispatch, useAppSelector } from '../../hooks/reducer';
-//import { searchProducts } from '../../store/productsActions';
+import { KEY_NAME_ENTER, SHOP_CURRENCY } from '../../jsons/links';
+import { searchProducts } from '../../store/searchSlice';
+
 import search from './img/search.png'
 import './searchHeader.css'
 interface ISearch {
@@ -13,6 +15,9 @@ export function SearchHeader({styleSearch}: ISearch) {
   const [value, setValue] = useState('');
   const [dropdown, setDropdown] = useState(false)
   const navigate = useNavigate();
+  const error = useAppSelector((state) => state.search.error);
+  const loading = useAppSelector((state) => state.search.loading);
+  const searched = useAppSelector((state) => state.search.searched);
 
   const changeHandler = (evt: ChangeEvent<HTMLInputElement>) => {
     setValue(evt.target.value)
@@ -20,18 +25,18 @@ export function SearchHeader({styleSearch}: ISearch) {
 
   const debounced = useDebounce<string>(value);
   const dispatch = useAppDispatch();
-  
-  const {error:searchErr, loading: searchLoading, products: searchProds} = useAppSelector(state => state.products)
-  //let minmax: IMinMax;
+
 
   useEffect(() => {
-    if (debounced.length > 3) {
-      /*dispatch(searchProducts(debounced));*/
+    if (debounced.length > 2) {
+      dispatch(searchProducts(debounced));
       setDropdown(true);
     } else {
       setDropdown(false);
     }
   }, [debounced]);
+
+  console.log(searched, 3);
 
   const clickHandler = (id:number) => {
     navigate(`/products/${id}`);
@@ -54,7 +59,7 @@ export function SearchHeader({styleSearch}: ISearch) {
       </div> 
       : 
       <div onKeyDown={(ev) => {
-        if (ev.keyCode === 13) {
+        if (ev.key === KEY_NAME_ENTER) {
           changeInput()
         }
       }}>
@@ -67,12 +72,12 @@ export function SearchHeader({styleSearch}: ISearch) {
       </div>
       }
       {dropdown && <div className="search__dropdown">
-        {searchProds.map(item => (
+        {searched.map(item => (
           <div 
             className="search__dropdown-item" 
             key={item.id}
             onClick={() => clickHandler(item.id)}
-            >{item.title}</div>
+            >{item.title} {item.price} {SHOP_CURRENCY}</div>
         ))}
       </div>}
     </div>

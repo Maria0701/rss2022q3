@@ -7,6 +7,7 @@ import { hideModal } from "../../store/modalSlice";
 import { fetchSingleProduct } from "../../store/productSlice";
 import { AddProductToCart } from "../addProductToCart/AddProductToCart";
 import { CATEGORIES, KEY_NAME_ESC, SHOP_CURRENCY } from "../../jsons/links";
+import { Rating } from "../stars/stars";
 
 export function Modal () {
   const dispatch = useAppDispatch();
@@ -72,6 +73,7 @@ export function Modal () {
                             </div>
                         </div>
                         <div className="short-prod__content">
+                            <Rating rating={product.rating} />
                             <p className="short-prod__brand">{product.brand}</p>
                             <p className="short-prod__name">{product.title}</p>
                             <p className="short-prod__category">{CATEGORIES[product.category]}</p>

@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/reducer";
 import { showModal } from "../../store/modalSlice";
 import { AddProductToCart } from "../addProductToCart/AddProductToCart";
 import { SHOP_CURRENCY } from "../../jsons/links";
+import { Rating } from '../stars/stars';
 
 interface IProductProps {
   product: IProductCard
@@ -32,7 +33,7 @@ export function ProductCard ({product}: IProductProps) {
         <img src={product.thumbnail} alt={product.title} />
       </div>
       <div className="product-card__content">
-        <div className="product-card__rating">Rate: <span >{product.rating}</span></div>
+        <div className="product-card__rating"><Rating rating={product.rating} /></div>
         <p  className="product-card__name">{product.title}</p>
         <span className="product-card__price">{product.price} {SHOP_CURRENCY}</span>
         <Btn eltClass='product-card__btn' onClick={(evt) => detailedCardHandler(evt, product.id)} btnText={"Show details"}/>

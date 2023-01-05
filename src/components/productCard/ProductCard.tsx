@@ -1,4 +1,3 @@
-import { useState } from "react"
 import './addProductToCart.css';
 import './productCard.css';
 import { IProductCard } from "../../models/models";

@@ -1,5 +1,4 @@
 import React from "react";
-import { CountOfProduct } from "../components/countOfProduct/CountOfProduct";
 import { H1Elt } from "../components/h1/H1";
 import { useAppSelector, useAppDispatch } from "../hooks/reducer";
 import { getTotalPrice, removeFromCard, updateQuantity, checkoutThunk } from "../store/cartSlice";

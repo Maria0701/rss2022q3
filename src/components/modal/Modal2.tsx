@@ -1,9 +1,9 @@
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 import './modal.css';
 import { Link } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from "../../hooks/reducer";
 import { hideModal2 } from "../../store/modalSlice2";
-import {SHOP_CURRENCY } from "../../jsons/links";
+import {KEY_NAME_ESC, SHOP_CURRENCY } from "../../jsons/links";
 import { Btn } from "../btns/btn";
 
 
@@ -11,13 +11,37 @@ import { Btn } from "../btns/btn";
 export function Modal2 () {
   const dispatch = useAppDispatch();
   const hideModalHandler = () => dispatch(hideModal2({isHidden2: false}));
+  const modalEl = useRef<HTMLElement>(null);
   const count = useAppSelector((state) => state.modal2.count);
   const title = useAppSelector((state) => state.modal2.title)
   const price = useAppSelector((state) => state.modal2.price);
+  const isModalOpened = useAppSelector((state) => state.modal2.isHidden2);
+
+  useEffect(() => {
+    const checkIfClickedOutside = (e: MouseEvent) => {
+        if (isModalOpened && modalEl.current && !modalEl.current.contains(e.target as HTMLElement)) {
+            hideModalHandler();
+        }
+    };
+    
+    const close = (e: KeyboardEvent) => {
+        if(e.key === KEY_NAME_ESC) {
+            hideModalHandler()
+        }
+    };
+
+    document.addEventListener("mousedown", checkIfClickedOutside)
+    window.addEventListener('keydown', close);
+
+    return () => {
+        document.removeEventListener("mousedown", checkIfClickedOutside)
+        window.removeEventListener('keydown', close);
+    };
+}, []);
 
   return (
     <div className="popup-overlay">
-        <section className="popup">
+        <section className="popup"  ref={modalEl}>
             <div className="popup__wrapper">
                 <button className="btn popup__close" onClick={hideModalHandler}>x</button>
                 <div className="popup__head">Added to the cart</div>

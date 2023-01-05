@@ -8,9 +8,11 @@ import { useAppSelector } from './hooks/reducer';
 
 import { CartPage } from './pages/CartPage';
 import { Modal } from './components/modal/Modal';
+import { Modal2 } from './components/modal/Modal2';
 
 function App() {
   const modalIsShown = useAppSelector((state) => state.modal.isHidden)
+  const modalIsShown2 = useAppSelector((state) => state.modal2.isHidden2)
 
   return (
     <>
@@ -24,6 +26,7 @@ function App() {
       </main>
       <Footer />
       {modalIsShown && <Modal />}
+      {modalIsShown2 && <Modal2 />}
     </>
   )
 };

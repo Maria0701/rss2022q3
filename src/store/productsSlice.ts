@@ -27,7 +27,7 @@ export const fetchProductsThunk = createAsyncThunk(
     async ({limit, skip}: {limit: number, skip:number}, thunkAPI) => {
         //const state = thunkAPI.getState() as RootState;
         try {
-            const response = await fetch(`${baseURL}products?limit=${limit}&skip=${skip}`)
+            const response = await fetch(`${baseURL}products?limit=${limit}&skip=${skip}&select=title,price,thumbnail,price,rating,id,brand,category`)
             .then(res => res.json());
             return response;
         } catch (err) {
@@ -42,7 +42,7 @@ export const fetchProductsThunkPerPage = createAsyncThunk(
     async ({limit, skip}: {limit: number, skip:number}, thunkAPI) => {
         //const state = thunkAPI.getState() as RootState;
         try {
-            const response = await fetch(`${baseURL}products?limit=${limit}&skip=${skip}`)
+            const response = await fetch(`${baseURL}products?limit=${limit}&skip=${skip}&select=title,price,thumbnail,price,rating,id,brand,category`)
             .then(res => res.json());
             return response;
         } catch (err) {

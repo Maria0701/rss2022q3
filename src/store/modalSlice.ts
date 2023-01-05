@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ISingleProduct } from "../models/models";
 
 interface IModalState {
     isHidden: boolean,
@@ -21,9 +20,9 @@ export const modalSlice = createSlice ({
             state.isHidden = action.payload.isHidden;
             state.prodId = action.payload.id;
         },
-        hideModal(state, action: PayloadAction<boolean>)  {
-            state.isHidden = action.payload;
-            state.prodId = 0;
+        hideModal(state, action: PayloadAction<{isHidden: boolean, id: number}>) {
+            state.isHidden = action.payload.isHidden;
+            state.prodId = action.payload.id
         },
     },
 });

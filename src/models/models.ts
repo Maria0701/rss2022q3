@@ -15,11 +15,9 @@ export interface IProductCard{
   price: number,
   description: string,
   category: string,
-  images: string[],
-  rating: {
-      rate: number,
-      count: number
-  }
+  thumbnail: string,
+  rating: number,
+  brand: string,
 }
 
 export interface ISingleProduct {

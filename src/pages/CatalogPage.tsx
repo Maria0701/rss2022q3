@@ -8,7 +8,7 @@ import { Pagination } from "../components/pagination/Pagination";
 import { BREADCRUMBS_LINKS } from "../jsons/links";
 import { useAppDispatch, useAppSelector } from "../hooks/reducer";
 import { fetchProductsThunkPerPage } from "../store/productsSlice";
-import { changeGoodsPerPage, changePage, getSkiped } from "../store/paginationSlice";
+import { changeGoodsPerPage, changePage, getSkipped } from "../store/paginationSlice";
 import './catalog-page.css'
 
 const POSTS_PER_PAGE = 15;

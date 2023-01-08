@@ -34,6 +34,5 @@ export const {changePage, changeNumberOfPages, changeGoodsPerPage} = paginationS
 export default paginationSlice.reducer;
 
 export function getSkipped(state: RootState) {
-    console.log((state.pagination.currentPage - 1) * state.pagination.goodsPerPage);
     return (state.pagination.currentPage - 1) * state.pagination.goodsPerPage;
 };

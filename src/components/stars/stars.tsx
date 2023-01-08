@@ -14,7 +14,6 @@ export function Rating({rating}: IRating) {
       
       return '100%';
     } if ((id % rating) > 0 && Math.floor(rating / id) < 1) {
-      console.log(rating, id, id % rating)
       return `${id % rating * 100}%`;
     } else {
       return '0%';

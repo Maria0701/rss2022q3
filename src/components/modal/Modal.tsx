@@ -52,7 +52,6 @@ export function Modal () {
         navigate(`products/${product.id}`);
         hideModalHandler();
     }
- //console.log(product)
 
   return (
     <div className="popup-overlay">

@@ -8,6 +8,7 @@
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     background-color: var(--grey);
+
 }
 
 .filters__name {
@@ -23,6 +24,8 @@
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     padding: 16px;
+    max-height: 600px;
+    overflow-y: auto;
 }
 
 .filter__label {

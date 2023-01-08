@@ -11,6 +11,7 @@ interface ProductsState {
     filteredProducts: IProductCard[];
     initialProducts: IProductCard[];
     numOfProds: number;
+    view: string;
 }
 
 const initialState: ProductsState = {
@@ -20,6 +21,7 @@ const initialState: ProductsState = {
     filteredProducts:[],
     initialProducts: [],
     numOfProds: 0,
+    view: 'normal',
 };
 
 export const fetchProductsThunk = createAsyncThunk(
@@ -92,6 +94,9 @@ export const productsSlice = createSlice({
         },
         paginateFiltered(state, action: PayloadAction<{limit: number, skip: number}>) {
             state.products = [...state.filteredProducts].slice(action.payload.limit, action.payload.skip);
+        },
+        changeView(state, action:PayloadAction<string>) {
+            state.view = action.payload;
         }
     }, extraReducers: (builder) => {
        builder
@@ -127,7 +132,7 @@ export const productsSlice = createSlice({
 });
 
 
-export const {filterByPrice, paginateFiltered} = productsSlice.actions;
+export const {filterByPrice, paginateFiltered, changeView} = productsSlice.actions;
 
 export default productsSlice.reducer;
 

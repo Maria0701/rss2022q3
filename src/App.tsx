@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector } from './hooks/reducer';
 import { CartPage } from './pages/CartPage';
 import { Modal } from './components/modal/Modal';
 import { Modal2 } from './components/modal/Modal2';
-import { filterByPrice } from './store/productsSlice';
+import { changeView, filterByPrice } from './store/productsSlice';
 import { changePage } from './store/paginationSlice';
 
 
@@ -27,6 +27,7 @@ function App() {
   const maxFiltered = useAppSelector((state) => state.filter.maxPrice);
   const minAv = useAppSelector((state) => state.filter.minAvailable);
   const maxAv = useAppSelector((state) => state.filter.maxAvailable);
+  const view = useAppSelector((state) => state.products.view);
   const categoriesFiltered = useAppSelector((state) => state.filter.filterCategories.join('_'));
 
 
@@ -43,6 +44,7 @@ function App() {
     }));
     
     dispatch(changePage(Number(searchParams.get('page'))));
+    dispatch(changeView(searchParams.get('view') || ''));
 
   },[]);
 
@@ -56,9 +58,10 @@ function App() {
         minav: `${minAv}`,
         maxav: `${maxAv}`,
         cats: categoriesFiltered,
+        view: view,
       })
     );
-  }, [currentPage, sorting, minFiltered, maxFiltered, categoriesFiltered]);
+  }, [currentPage, sorting, minFiltered, maxFiltered, categoriesFiltered, view]);
 
   return (
     <>

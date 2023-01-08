@@ -12,6 +12,7 @@ import { changeGoodsPerPage, changePage} from "../store/paginationSlice";
 import './catalog-page.css'
 import { skip } from "../hooks/get-lowest-and-highest";
 import { useSearchParams } from "react-router-dom";
+import { ChangeState } from "../components/change-state/change-state";
 
 const POSTS_PER_PAGE = 15;
 
@@ -27,6 +28,7 @@ export function CatalogPage() {
   const totalItems = useAppSelector((state) => state.products.numOfProds);
   const currentPageStored = useAppSelector((state) => state.pagination.currentPage);
   const postsPerPageStored = useAppSelector((state) => state.pagination.goodsPerPage);
+  const activeView = useAppSelector(state => state.products.view);
 
   const paginate = (pageNumber: number) => {
     dispatch(changePage(pageNumber));
@@ -54,7 +56,7 @@ export function CatalogPage() {
     }
   }, [dispatch]);
 
-
+ 
   const getPageNumText = currentPageStored > 1 ? currentPageStored : '';
   
     return (
@@ -69,9 +71,9 @@ export function CatalogPage() {
         <Filters eltClass="catalog__filters" />
         <div className="catalog__block">
           <div className="catalog__top">
-            <Sorting/>
+            <Sorting/> <ChangeState eltClass="" active={activeView} />
           </div>
-          <Catalog eltClass="catalog__catalog" products={products}/>
+          <Catalog eltClass={`catalog__catalog ${activeView}`} products={products}/>
           <Pagination postsPerPage={postsPerPageStored} totalPosts={totalItems} paginate={paginate} currentPage={currentPageStored}/>
         </div>
       </div>

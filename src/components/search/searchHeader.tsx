@@ -38,9 +38,11 @@ export function SearchHeader({styleSearch}: ISearch) {
   }, [debounced]);
 
   const clickHandler = (id:number) => {
-    navigate(`/products/${id}`);
+    console.log(id);
+    navigate(`products/${id}`);
     setDropdown(false);
   }
+
 
   function changeSearch (): void {
     setSearchItem(prev => !prev)

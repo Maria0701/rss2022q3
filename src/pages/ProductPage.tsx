@@ -19,11 +19,11 @@ export function ProductPage() {
   const error = useAppSelector((state) => state.product.error);
   const product = useAppSelector((state) => state.product.product)
 
-  let [index, setIndex] = useState(0)
+
 
   useEffect (() => {
     dispatch(fetchSingleProduct(Number(params.id)));
-  }, [dispatch]);
+  }, [dispatch, params]);
 
     return (
     <div className="container product">

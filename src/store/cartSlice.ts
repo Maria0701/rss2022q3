@@ -2,13 +2,14 @@ import { createSelector, createSlice, PayloadAction, createAsyncThunk } from "@r
 import { RootState} from "./store";
 import { checkout } from "../jsons/fakes";
 
-export interface CartItem {
+export interface ICartItem {
     id: number,
     quantity: number,
+    price: number,
 }
 
 export interface CartState {
-    items: CartItem[],
+    items: ICartItem[],
     checkoutState: CheckoutState,
     errorMessage: string,
 }
@@ -35,16 +36,16 @@ const cartSlice = createSlice({
     name: 'cart',
     initialState,
     reducers: {
-        addToCart(state, action: PayloadAction<{id: number, count: number}>) {
+        addToCart(state, action: PayloadAction<{id: number, count: number, price: number}>) {
             const id = action.payload.id;
-            const count = action.payload.count;
             const existingItem = state.items.find(item => item.id === id);
             if (existingItem) {
-                existingItem.quantity += count;
+                existingItem.quantity += action.payload.count;
             } else {
                 state.items.push({
                     id: id,
-                    quantity: count,
+                    quantity: action.payload.count,
+                    price: action.payload.price,
                 })
             }
         },
@@ -57,24 +58,24 @@ const cartSlice = createSlice({
         }
     },
     extraReducers: (builder) => {
-        builder.addCase(checkoutThunk.pending, (state) => {
-            state.checkoutState = 'Loading';
-            return
-        }),
-        builder.addCase(checkoutThunk.fulfilled, (state, action: PayloadAction<{success: boolean}>) => {
-            const {success} = action.payload;
-            if (success) {
-                state.checkoutState = 'Ready';
-                state.items = [];
-            } else {
+        builder
+            .addCase(checkoutThunk.pending, (state) => {
+                state.checkoutState = 'Loading';
+                return
+            })
+            .addCase(checkoutThunk.fulfilled, (state, action: PayloadAction<{success: boolean}>) => {
+                const {success} = action.payload;
+                if (success) {
+                    state.checkoutState = 'Ready';
+                    state.items = [];
+                } else {
+                    state.checkoutState = 'error';
+                }
+            })
+            .addCase(checkoutThunk.rejected, (state, action) => {
                 state.checkoutState = 'error';
-            }
-        }),
-        builder.addCase(checkoutThunk.rejected, (state, action) => {
-            state.checkoutState = 'error';
-            state.errorMessage = action.error.message || '';
-        })
-
+                state.errorMessage = action.error.message || '';
+            })
     },
 });
 
@@ -94,5 +95,5 @@ export const getMemoizedNumItems = createSelector(
 export const getTotalPrice = createSelector(
     (state: RootState) => state.cart.items,
     (state: RootState) => state.products.initialProducts,
-    (items, initialProducts) => items.reduce((result, current) => result + current.quantity*initialProducts[current.id].price, 0).toFixed(2),
+    (items, initialProducts) => items.reduce((result, current) => result + current.quantity*current.price, 0).toFixed(2),
 )

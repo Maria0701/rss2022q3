@@ -15,8 +15,7 @@ export function ProductPage() {
   useEffect (() => {
     dispatch(fetchSingleProduct(Number(params.id)));
   }, [dispatch]);
-  
-  console.log(product);
+
 
     return (
     <div className="container">

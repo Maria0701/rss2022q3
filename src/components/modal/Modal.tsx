@@ -33,13 +33,13 @@ export function Modal () {
                 hideModalHandler();
             }
         }
-        document.addEventListener("mousedown", checkIfClickedOutside)
         const close = (e: KeyboardEvent) => {
             if(e.key === KEY_NAME_ESC) {
                 hideModalHandler()
             }
         }
         window.addEventListener('keydown', close);
+        document.addEventListener("mousedown", checkIfClickedOutside);
 
         return () => {
             document.removeEventListener("mousedown", checkIfClickedOutside)
@@ -52,7 +52,6 @@ export function Modal () {
         navigate(`products/${product.id}`);
         hideModalHandler();
     }
- //console.log(product)
 
   return (
     <div className="popup-overlay">
@@ -73,10 +72,10 @@ export function Modal () {
                             </div>
                         </div>
                         <div className="short-prod__content">
-                            <Rating rating={product.rating} />
                             <p className="short-prod__brand">{product.brand}</p>
                             <p className="short-prod__name">{product.title}</p>
                             <p className="short-prod__category">{CATEGORIES[product.category]}</p>
+                            <Rating rating={product.rating} />
                             <p className="short-prod__info">
                                 {product.rating}
                             </p>

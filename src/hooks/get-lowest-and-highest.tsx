@@ -15,3 +15,8 @@ export function getHighestAndLowest(arr:IProductCard[]):IMinMax {
         max: Math.max(...arrPrices),
     };
 };
+
+
+export const skip = (curr:number, perPage: number) => {
+    return (curr - 1) * perPage;
+}

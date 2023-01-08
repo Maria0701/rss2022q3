@@ -1,18 +1,58 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { CatalogPage } from './pages/CatalogPage';
 import { ProductPage } from './pages/ProductPage';
-import {Route, Routes} from 'react-router-dom'
+import {createSearchParams, Route, Routes, useSearchParams} from 'react-router-dom'
 import { Header} from './components/header/Header';
 import { Footer } from './components/footer/Footer';
-import { useAppSelector } from './hooks/reducer';
+import { useAppDispatch, useAppSelector } from './hooks/reducer';
 
 import { CartPage } from './pages/CartPage';
 import { Modal } from './components/modal/Modal';
 import { Modal2 } from './components/modal/Modal2';
+import { filterByPrice } from './store/productsSlice';
+import { changePage } from './store/paginationSlice';
+
+
 
 function App() {
-  const modalIsShown = useAppSelector((state) => state.modal.isHidden)
-  const modalIsShown2 = useAppSelector((state) => state.modal2.isHidden2)
+  const dispatch = useAppDispatch()
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const modalIsShown = useAppSelector((state) => state.modal.isHidden);
+  const modalIsShown2 = useAppSelector((state) => state.modal2.isHidden2);
+
+  const currentPage = useAppSelector((state) => state.pagination.currentPage);
+  const sorting = useAppSelector((state) => state.filter.sorting);
+  const minFiltered = useAppSelector((state) => state.filter.minPrice);
+  const maxFiltered = useAppSelector((state) => state.filter.maxPrice);
+  const categoriesFiltered = useAppSelector((state) => state.filter.filterCategories.join('_'));
+
+
+ 
+  useEffect(() => {
+    console.log(searchParams.get('cats')?.split('_'));
+    dispatch(filterByPrice({
+        min: Number(searchParams.get('min')), 
+        max: Number(searchParams.get('max')), 
+        cats: searchParams.get('cats')?.split('_') || [], 
+        direction: searchParams.get('sort') || 'default',
+    }));
+    
+    dispatch(changePage(Number(searchParams.get('page'))));
+
+  },[dispatch]);
+
+  useEffect(() => {
+    setSearchParams(
+      createSearchParams({ 
+        page: `${currentPage}`, 
+        sort: sorting, 
+        min: `${minFiltered}`, 
+        max: `${maxFiltered}`,
+        cats: categoriesFiltered,
+      })
+    );
+  }, [currentPage, sorting, minFiltered, maxFiltered, categoriesFiltered]);
 
   return (
     <>

@@ -52,37 +52,46 @@ export const fetchProductsThunkPerPage = createAsyncThunk(
     }
 )
 
+const filterItems = (items:IProductCard[], direction:string): IProductCard[] => {
+    let res:IProductCard[] = [];
+    switch(direction) {
+        case 'cheap':
+            res = [...items].sort((a, b) => a.price - b.price);
+            break;
+        case 'expensive':
+            res =  [...items].sort((a, b) => b.price - a.price);
+            break;
+        case 'az':
+            res = [...items].sort((a, b) => a.title.localeCompare(b.title));
+            break;
+        case 'za':
+            res = [...items].sort((a, b) => b.title.localeCompare(a.title));
+            break;
+        case 'default':
+            res =  [...items];
+            break;
+        case '':
+            res =  [...items];
+            break;
+    }
+
+    return res
+}
+
 export const productsSlice = createSlice({
     name: 'products',
     initialState: initialState,
     reducers: {
-        filterByPrice(state, action: PayloadAction<{min: number, max: number, cats: string[]}>) {
+        filterByPrice(state, action: PayloadAction<{min: number, max: number, cats: string[], direction: string}>) {
             if (action.payload.cats.length > 0) {
-                state.products = state.filteredProducts.filter(item => action.payload.min < item.price && action.payload.max > item.price && action.payload.cats.includes(item.category));
+                state.filteredProducts = filterItems(state.initialProducts.filter(item => action.payload.min < item.price && action.payload.max > item.price && action.payload.cats.includes(item.category)), action.payload.direction);
             } else {
-                state.products = state.filteredProducts.filter(item => action.payload.min < item.price && action.payload.max > item.price);
+                state.filteredProducts = filterItems(state.initialProducts.filter(item => action.payload.min < item.price && action.payload.max > item.price), action.payload.direction);
             }
+            state.numOfProds = state.filteredProducts.length;
         },
-        sortProducts(state, action: PayloadAction<string>) {
-            if (action.payload === 'cheap') {
-                state.products = state.products.sort((a, b) => a.price - b.price);
-                state.filteredProducts = [...state.initialProducts].sort((a, b) => a.price - b.price);
-            }
-            if (action.payload === 'expensive') {
-                state.products = state.products.sort((a, b) => b.price - a.price);
-                state.filteredProducts = [...state.initialProducts].sort((a, b) => b.price - a.price);
-            }
-            if (action.payload === 'az') {
-                state.products = state.products.sort((a, b) => a.title.localeCompare(b.title));
-                state.filteredProducts = [...state.initialProducts].sort((a, b) => a.title.localeCompare(b.title));
-            }
-            if (action.payload === 'za') {
-                state.products = state.products.sort((a, b) => b.title.localeCompare(a.title));
-                state.filteredProducts = [...state.initialProducts].sort((a, b) => b.title.localeCompare(a.title));
-            }
-            if (action.payload === 'default') {
-                state.products = state.initialProducts;
-            }
+        paginateFiltered(state, action: PayloadAction<{limit: number, skip: number}>) {
+            state.products = [...state.filteredProducts].slice(action.payload.limit, action.payload.skip);
         }
     }, extraReducers: (builder) => {
        builder
@@ -92,7 +101,6 @@ export const productsSlice = createSlice({
         })
         .addCase(fetchProductsThunk.fulfilled, (state, action:PayloadAction<{products:IProductCard[], total: number}>) => {
             state.products = action.payload.products;
-            state.filteredProducts = action.payload.products;
             state.initialProducts = action.payload.products;
             state.numOfProds = action.payload.total;
             state.loading = false;
@@ -119,7 +127,7 @@ export const productsSlice = createSlice({
 });
 
 
-export const {filterByPrice, sortProducts} = productsSlice.actions;
+export const {filterByPrice, paginateFiltered} = productsSlice.actions;
 
 export default productsSlice.reducer;
 

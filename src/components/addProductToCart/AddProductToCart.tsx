@@ -26,7 +26,7 @@ export function AddProductToCart ({id, text, title, price}: IAddToCart) {
   };
 
   const onClick= () => {
-    dispatch(addToCart({id: id, count: count}));
+    dispatch(addToCart({id: id, count: count, price: price}));
     dispatch(showModal2({isHidden2: true, count: count, title: title, price: price}));
   }
 

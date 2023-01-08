@@ -17,6 +17,7 @@ export interface IProductCard{
   thumbnail: string,
   rating: number,
   brand: string,
+  stock:number,
 }
 
 export interface ISingleProduct {

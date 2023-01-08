@@ -83,7 +83,7 @@ export function Modal () {
                                 <p className="short-prod__price">{product.price} {SHOP_CURRENCY}</p>
                                 <p className="short-prod__discount">{product.discountPercentage}%</p>
                             </div>
-                            <AddProductToCart id={product.id} text={getCartText} title={product.title} price={product.price}/>
+                            <AddProductToCart id={product.id} text={getCartText} title={product.title} price={product.price} stock={product.stock}/>
                             <div className="short-prod__description">{product.description}</div>
                             <p className="short-prod__more" onClick={clickHandler}>MORE...</p>
                         </div>

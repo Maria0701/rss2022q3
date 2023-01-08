@@ -6,13 +6,19 @@ export interface IFilterState {
     maxPrice: number,
     sorting: string,
     isFiltered: boolean,
+    minAvailable: number,
+    maxAvailable: number,
+    brands: string[],
 };
 
 
 const initialState: IFilterState = {
     filterCategories: [],
+    brands: [],
     minPrice: 0,
     maxPrice: 0,
+    minAvailable: 0,
+    maxAvailable: 0,
     sorting: 'default',
     isFiltered: false,
 };
@@ -35,8 +41,22 @@ const filterSlice = createSlice({
                 state.filterCategories.push(category);
             }
         },
+        changeBrands(state, action:PayloadAction<string>) {
+            const brand = action.payload;
+            if (state.brands.includes(brand)) {
+                state.brands = state.filterCategories.filter(item => item !== brand);
+            } else {
+                state.brands.push(brand);
+            }
+        },
         changeSorting(state, action:PayloadAction<string>) {
             state.sorting = action.payload;
+        },
+        changeMinAvailable(state, action:PayloadAction<number>) {
+            state.minAvailable = action.payload
+        },
+        changeMaxAvailable(state, action:PayloadAction<number>) {
+            state.maxAvailable = action.payload
         },
         setFiltered(state, action:PayloadAction<boolean>) {
             state.isFiltered = action.payload;
@@ -49,5 +69,5 @@ const filterSlice = createSlice({
     }
 });
 
-export const {changeMinPrice, changeMaxPrice, changeCategoriesArr, clearFilter, changeSorting, setFiltered} = filterSlice.actions;
+export const {changeMinAvailable, changeMaxAvailable, changeMinPrice, changeMaxPrice, changeCategoriesArr, clearFilter, changeSorting, setFiltered} = filterSlice.actions;
 export default filterSlice.reducer;

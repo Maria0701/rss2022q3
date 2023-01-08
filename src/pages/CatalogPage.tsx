@@ -11,13 +11,15 @@ import { fetchProductsThunkPerPage, paginateFiltered } from "../store/productsSl
 import { changeGoodsPerPage, changePage} from "../store/paginationSlice";
 import './catalog-page.css'
 import { skip } from "../hooks/get-lowest-and-highest";
+import { useSearchParams } from "react-router-dom";
 
 const POSTS_PER_PAGE = 15;
 
 
 export function CatalogPage() {
 
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
   const products = useAppSelector(state => state.products.products);
   const isFiltered = useAppSelector(state => state.filter.isFiltered);
   const errorProducts = useAppSelector(state => state.products.error);
@@ -30,6 +32,7 @@ export function CatalogPage() {
     dispatch(changePage(pageNumber));
     const toSkip = skip(pageNumber, postsPerPageStored);
     
+
     if (!isFiltered){
       dispatch(fetchProductsThunkPerPage({limit: postsPerPageStored, skip: toSkip}));
     }
@@ -42,7 +45,6 @@ export function CatalogPage() {
   useEffect(() => {
     dispatch(changeGoodsPerPage(POSTS_PER_PAGE));
     const toSkip = skip(currentPageStored, postsPerPageStored);
-
     if (!isFiltered) {
       dispatch(fetchProductsThunkPerPage({limit: postsPerPageStored, skip: toSkip}));
     }

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, createAsyncThunk, createSelector } from '@reduxjs/toolkit'
-import { getHighestAndLowest } from '../hooks/get-lowest-and-highest';
+import { getBrands, getHighestAndLowest, getHighestAndLowestAv } from '../hooks/get-lowest-and-highest';
 import { IProductCard } from '../models/models'
 import { baseURL } from './productsActions';
 import { RootState } from './store';
@@ -27,7 +27,7 @@ export const fetchProductsThunk = createAsyncThunk(
     async ({limit, skip}: {limit: number, skip:number}, thunkAPI) => {
         //const state = thunkAPI.getState() as RootState;
         try {
-            const response = await fetch(`${baseURL}products?limit=${limit}&skip=${skip}&select=title,price,thumbnail,price,rating,id,brand,category`)
+            const response = await fetch(`${baseURL}products?limit=${limit}&skip=${skip}&select=title,price,thumbnail,price,rating,id,brand,category,stock`)
             .then(res => res.json());
             return response;
         } catch (err) {
@@ -42,7 +42,7 @@ export const fetchProductsThunkPerPage = createAsyncThunk(
     async ({limit, skip}: {limit: number, skip:number}, thunkAPI) => {
         //const state = thunkAPI.getState() as RootState;
         try {
-            const response = await fetch(`${baseURL}products?limit=${limit}&skip=${skip}&select=title,price,thumbnail,rating,id,brand,category`)
+            const response = await fetch(`${baseURL}products?limit=${limit}&skip=${skip}&select=title,price,thumbnail,rating,id,brand,category,stock`)
             .then(res => res.json());
             return response;
         } catch (err) {
@@ -82,11 +82,11 @@ export const productsSlice = createSlice({
     name: 'products',
     initialState: initialState,
     reducers: {
-        filterByPrice(state, action: PayloadAction<{min: number, max: number, cats: string[], direction: string}>) {
+        filterByPrice(state, action: PayloadAction<{min: number, max: number, minAv: number, maxAv: number, cats: string[], direction: string}>) {
             if (action.payload.cats.length > 0) {
-                state.filteredProducts = filterItems(state.initialProducts.filter(item => action.payload.min < item.price && action.payload.max > item.price && action.payload.cats.includes(item.category)), action.payload.direction);
+                state.filteredProducts = filterItems(state.initialProducts.filter(item => action.payload.minAv < item.stock && action.payload.maxAv > item.stock && action.payload.min < item.price && action.payload.max > item.price && (action.payload.cats.includes(item.category) || action.payload.cats.includes(item.brand))), action.payload.direction);
             } else {
-                state.filteredProducts = filterItems(state.initialProducts.filter(item => action.payload.min < item.price && action.payload.max > item.price), action.payload.direction);
+                state.filteredProducts = filterItems(state.initialProducts.filter(item => action.payload.minAv < item.stock && action.payload.maxAv > item.stock && action.payload.min < item.price && action.payload.max > item.price), action.payload.direction);
             }
             state.numOfProds = state.filteredProducts.length;
         },
@@ -131,11 +131,17 @@ export const {filterByPrice, paginateFiltered} = productsSlice.actions;
 
 export default productsSlice.reducer;
 
-export function getMinMax(state: RootState) {
-    return getHighestAndLowest(state.products.initialProducts);
-}
-
 export const getMemoizedMinMax = createSelector(
     (state: RootState) => state.products.initialProducts,
     (initialProducts) => getHighestAndLowest(initialProducts)
+);
+
+export const getMemoizedMinMaxAv = createSelector(
+    (state: RootState) => state.products.initialProducts,
+    (initialProducts) => getHighestAndLowestAv(initialProducts)
+);
+
+export const getMemoizedBrands = createSelector(
+    (state: RootState) => state.products.initialProducts,
+    (initialProducts) => getBrands(initialProducts)
 );

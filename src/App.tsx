@@ -25,6 +25,8 @@ function App() {
   const sorting = useAppSelector((state) => state.filter.sorting);
   const minFiltered = useAppSelector((state) => state.filter.minPrice);
   const maxFiltered = useAppSelector((state) => state.filter.maxPrice);
+  const minAv = useAppSelector((state) => state.filter.minAvailable);
+  const maxAv = useAppSelector((state) => state.filter.maxAvailable);
   const categoriesFiltered = useAppSelector((state) => state.filter.filterCategories.join('_'));
 
 
@@ -33,14 +35,16 @@ function App() {
     console.log(searchParams.get('cats')?.split('_'));
     dispatch(filterByPrice({
         min: Number(searchParams.get('min')), 
-        max: Number(searchParams.get('max')), 
+        max: Number(searchParams.get('max')),
+        minAv: Number(searchParams.get('minav')),
+        maxAv: Number(searchParams.get('maxav')),
         cats: searchParams.get('cats')?.split('_') || [], 
         direction: searchParams.get('sort') || 'default',
     }));
     
     dispatch(changePage(Number(searchParams.get('page'))));
 
-  },[dispatch]);
+  },[]);
 
   useEffect(() => {
     setSearchParams(
@@ -49,6 +53,8 @@ function App() {
         sort: sorting, 
         min: `${minFiltered}`, 
         max: `${maxFiltered}`,
+        minav: `${minAv}`,
+        maxav: `${maxAv}`,
         cats: categoriesFiltered,
       })
     );

@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from "react"
+import React, { useEffect } from "react"
 import { useParams } from "react-router-dom";
 import { AddProductToCart } from "../components/addProductToCart/AddProductToCart";
 import { Rating } from "../components/stars/stars";

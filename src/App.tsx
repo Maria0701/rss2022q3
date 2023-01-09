@@ -34,7 +34,6 @@ function App() {
 
  
   useEffect(() => {
-    if (searchParams.entries.length > 0) {
       const cats = searchParams.get('cats')?.split('_') || [];
       dispatch(changeMinPrice(Number(searchParams.get('min'))));
       dispatch(changeMaxPrice(Number(searchParams.get('max'))));
@@ -44,23 +43,7 @@ function App() {
       dispatch(changeMinAvailable(Number(searchParams.get('minav'))));   
       dispatch(changePage(Number(searchParams.get('page'))));
       dispatch(changeView(searchParams.get('view') || ''));
-    }
-  },[dispatch]);
-
-  /*useEffect(() => {
-    setSearchParams(
-      createSearchParams({ 
-        page: `${currentPage}`, 
-        sort: sorting, 
-        min: `${minFiltered}`, 
-        max: `${maxFiltered}`,
-        minav: `${minAv}`,
-        maxav: `${maxAv}`,
-        cats: categoriesFiltered,
-        view: view,
-      })
-    );
-  }, [currentPage, sorting, minFiltered, maxFiltered, categoriesFiltered, view]);*/
+  },[]);
 
   return (
     <>

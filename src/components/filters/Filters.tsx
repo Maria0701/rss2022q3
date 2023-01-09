@@ -41,15 +41,13 @@ export function Filters({eltClass}: IFiltersElt) {
     const toSkip = skip(currentPageStored, postsPerPageStored);
 
     if (cats.length > 0 || filteredMax !== max || filteredMin !== min || filteredAvMax !== maxAv || filteredAvMin !== minAv || direction !== 'default') {
-      dispatch(setFiltered(true));
+      dispatch(setFiltered(true));      
     } else {
       dispatch(setFiltered(false));
     }
 
     dispatch(filterByPrice({min:filteredMin, max: filteredMax, minAv: filteredAvMin,  maxAv: filteredAvMax, cats: cats, direction: direction}));
     
-    /*dispatch(changePage(1));*/
-
     dispatch(paginateFiltered ({limit: 0, skip: postsPerPageStored + toSkip}));
     
   }, [filteredMin, filteredMax, cats, direction, filteredAvMin, filteredAvMax]);

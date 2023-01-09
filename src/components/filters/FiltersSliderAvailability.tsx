@@ -4,6 +4,7 @@ import { useDebounce } from "../../hooks/deboubce";
 import { useAppDispatch, useAppSelector } from "../../hooks/reducer";
 import { IMinMax } from "../../models/models";
 import { changeMaxAvailable, changeMinAvailable } from "../../store/filterSlice";
+import { changePage } from "../../store/paginationSlice";
 
 interface IFiltersSlider {
     eltClass: string;
@@ -18,33 +19,35 @@ export function FiltersSliderAvail({eltClass, startInfo, name}: IFiltersSlider) 
     const filteredMin = useAppSelector(state => state.filter.minAvailable);
     const filteredMax = useAppSelector(state => state.filter.maxAvailable);
     const {min, max} = startInfo;
-    const [minVal, setMinVal] = useState(min);
-    const [maxVal, setMaxVal] = useState(max);
-    const [minInputVal, setMinInputVal] = useState(min)
-    const [maxInputVal, setMaxInputVal] = useState(max)
-    const minValRef = useRef(min);
-    const maxValRef = useRef(max);
+    const [minVal, setMinVal] = useState(filteredMin);
+    const [maxVal, setMaxVal] = useState(filteredMax);
+    const [minInputVal, setMinInputVal] = useState(filteredMin)
+    const [maxInputVal, setMaxInputVal] = useState(filteredMax)
+    const minValRef = useRef(filteredMin);
+    const maxValRef = useRef(filteredMax);
     const range = useRef<HTMLDivElement>(null);
     const debouncedMax = useDebounce(maxInputVal, 400);
     const debouncedMin = useDebounce(minInputVal, 400);
 
     useEffect(() => {
-        setMinVal(min);
-        setMaxVal(max);
-        setMinInputVal(min);
-        setMaxInputVal(max);
-        dispatch(changeMinAvailable(min));
-        dispatch(changeMaxAvailable(max));
-    }, [min, max]);
+        setMinVal(filteredMin);
+        setMaxVal(filteredMax);
+        setMinInputVal(filteredMin);
+        setMaxInputVal(filteredMax);
 
-    useEffect(() => {
-        if (filteredMin === 0 && filteredMax === 0){
+        if (filteredMin === 0) {
             setMinInputVal(min);
-            setMaxInputVal(max);
+            setMinVal(min);           
             dispatch(changeMinAvailable(min));
+        }
+
+        if (filteredMax === 0) {
+            setMaxInputVal(max);
+            setMaxVal(max);
             dispatch(changeMaxAvailable(max));
         }
-    }, [filteredMin, filteredMax]);
+    }, [min, max]);
+
 
     // перевод в проценты
     const getPercent = useCallback(
@@ -99,7 +102,10 @@ export function FiltersSliderAvail({eltClass, startInfo, name}: IFiltersSlider) 
         setMinInputVal(value)
         minValRef.current = value;
         dispatch(changeMinAvailable(value));
-        searchParams.set('minav', `${value}`);
+        dispatch(changePage(1));
+        let updatedSearchParams = new URLSearchParams(searchParams.toString());
+        updatedSearchParams.set('minav', `${value}`);
+        setSearchParams(updatedSearchParams.toString());
     };
 
     const maxValHandler = (evt: React.ChangeEvent<HTMLInputElement>) => {
@@ -108,7 +114,10 @@ export function FiltersSliderAvail({eltClass, startInfo, name}: IFiltersSlider) 
         setMaxVal(value);
         maxValRef.current = value;
         dispatch(changeMaxAvailable(value));
-        searchParams.set('maxav', `${value}`);
+        dispatch(changePage(1));
+        let updatedSearchParams = new URLSearchParams(searchParams.toString());
+        updatedSearchParams.set('maxav', `${value}`);
+        setSearchParams(updatedSearchParams.toString());
     };
 
     return (

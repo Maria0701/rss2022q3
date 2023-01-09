@@ -11,7 +11,7 @@ interface IFiltersFieldset {
 
 export function FiltersFieldset({eltClass}: IFiltersFieldset) {
   const dispatch = useAppDispatch();
-  const [searchParams, setSearchParams] = useSearchParams();
+  
   const categories = useAppSelector(state => state.categories.categories);
   const loading = useAppSelector(state => state.categories.loading);
   const error = useAppSelector(state => state.categories.error);
@@ -21,8 +21,7 @@ export function FiltersFieldset({eltClass}: IFiltersFieldset) {
     dispatch(fetchCategoriesThunk());
   }, [dispatch]);
 
-  const isFiltered = (category: string):boolean => {
-    searchParams.set('cat', `${filterCategories.join('_')}`);
+  const isFiltered = (category: string):boolean => {    
     return filterCategories.includes(category) ? true : false;
   }
 

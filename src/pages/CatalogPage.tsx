@@ -33,8 +33,11 @@ export function CatalogPage() {
   const paginate = (pageNumber: number) => {
     dispatch(changePage(pageNumber));
     const toSkip = skip(pageNumber, postsPerPageStored);
-    searchParams.set('page', `${pageNumber}`);
 
+    let updatedSearchParams = new URLSearchParams(searchParams.toString());
+    updatedSearchParams.set('page', `${pageNumber}`);
+    setSearchParams(updatedSearchParams.toString());
+   
     if (!isFiltered){
       dispatch(fetchProductsThunkPerPage({limit: postsPerPageStored, skip: toSkip}));
     }

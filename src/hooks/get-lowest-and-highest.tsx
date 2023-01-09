@@ -22,7 +22,6 @@ export function getHighestAndLowestAv(arr:IProductCard[]):IMinMax {
         max: 0,
     }}
     const arrPrices = arr.map(item => item.stock || 0);
-    console.log(arr)
     return {
         min: Math.min(...arrPrices),
         max: Math.max(...arrPrices),

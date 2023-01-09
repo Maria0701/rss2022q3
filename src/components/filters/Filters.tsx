@@ -5,8 +5,14 @@ import { FiltersSlider } from './FiltersSlider';
 import './filters.css'
 import React from 'react';
 import { Btn } from '../btns/btn';
-import { clearFilter } from '../../store/filterSlice';
-import { filterByPrice, getMemoizedMinMax } from "../../store/productsSlice";
+import { clearFilter, setFiltered } from '../../store/filterSlice';
+import { filterByPrice, getMemoizedMinMax, getMemoizedMinMaxAv, paginateFiltered } from "../../store/productsSlice";
+import { changePage} from "../../store/paginationSlice";
+import { skip } from "../../hooks/get-lowest-and-highest";
+import { FiltersSliderAvail } from "./FiltersSliderAvailability";
+import { IMinMax } from "../../models/models";
+import { createSearchParams, useSearchParams } from "react-router-dom";
+import { FiltersFieldsetBrands } from "./FiltersfieldsetBrands";
 
 
 interface IFiltersElt {
@@ -14,21 +20,54 @@ interface IFiltersElt {
 }
 
 export function Filters({eltClass}: IFiltersElt) {
-  const [hasFilter, setWasFiltered] = useState(false);
   const dispatch = useAppDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const isFiltered = useAppSelector((state) => state.filter.isFiltered);
   const cats = useAppSelector(state => state.filter.filterCategories);
+  const direction = useAppSelector((state) => state.filter.sorting);
   const filteredMin = useAppSelector(state => state.filter.minPrice);
   const filteredMax = useAppSelector(state => state.filter.maxPrice);
-  const {min, max} = useAppSelector(getMemoizedMinMax);
+  const filteredAvMin = useAppSelector((state) => state.filter.minAvailable);
+  const filteredAvMax = useAppSelector((state) => state.filter.maxAvailable);
+  const currentPageStored = useAppSelector((state) => state.pagination.currentPage);
+  const postsPerPageStored = useAppSelector((state) => state.pagination.goodsPerPage);
+  const pricesStarted = useAppSelector(getMemoizedMinMax);
+  const availabilityStarted = useAppSelector(getMemoizedMinMaxAv);
+  const {min, max} = pricesStarted;
+  const minAv = availabilityStarted.min;
+  const maxAv = availabilityStarted.max;
 
   useEffect(() => {
-    if (cats.length > 0 || filteredMax !== max || filteredMin !== min) {
-      setWasFiltered(true)
+    const toSkip = skip(currentPageStored, postsPerPageStored);
+
+    if (cats.length > 0 || filteredMax !== max || filteredMin !== min || filteredAvMax !== maxAv || filteredAvMin !== minAv || direction !== 'default') {
+      dispatch(setFiltered(true));
     } else {
-      setWasFiltered(false)
+      dispatch(setFiltered(false));
     }
-    dispatch(filterByPrice({min:filteredMin, max: filteredMax, cats: cats}))
-  }, [filteredMin, filteredMax, cats]);
+
+    dispatch(filterByPrice({min:filteredMin, max: filteredMax, minAv: filteredAvMin,  maxAv: filteredAvMax, cats: cats, direction: direction}));
+    
+    dispatch(changePage(1));
+
+    dispatch(paginateFiltered ({limit: 0, skip: postsPerPageStored + toSkip}));
+
+   /* if (isFiltered) {
+      const categoriesFiltered = cats.join('_');
+      setSearchParams (
+        createSearchParams ({ 
+          page: `${currentPageStored}`, 
+          sort: direction, 
+          min: `${filteredMin}`, 
+          max: `${filteredMax}`,
+          minav: `${filteredAvMin}`,
+          maxav: `${filteredAvMax}`,
+          cats: categoriesFiltered,
+        })
+      );
+    }*/
+    
+  }, [filteredMin, filteredMax, cats, direction, filteredAvMin, filteredAvMax]);
 
 
   const clearFilterHandler = (event: React.MouseEvent) => {
@@ -38,8 +77,10 @@ export function Filters({eltClass}: IFiltersElt) {
   return (
     <div className={`filter ${eltClass}`}>
       {<FiltersFieldset eltClass=''  />}
-      {<FiltersSlider  eltClass='' />}
-      { hasFilter && <Btn eltClass={'clear__filter'}
+      {<FiltersFieldsetBrands eltClass=''  />}
+      {<FiltersSlider  eltClass='' startInfo={pricesStarted} name={`Price`}/>}
+      {<FiltersSliderAvail  eltClass='' startInfo={availabilityStarted} name={`Stock`}/>}
+      { isFiltered && <Btn eltClass={'clear__filter'}
         onClick={clearFilterHandler} btnText={'Clear Filter'}/>}
     </div>
   )

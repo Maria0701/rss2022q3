@@ -18,7 +18,7 @@ export function FiltersInput({eltClass, category, checked}: IFiltersInput) {
   return (
     <label className="filter__label">
         <input type="checkbox" value={category} className="filter__checkbox" onChange={(e) => changeCategories(e, category)} checked={checked} />
-        <span className="filter__text">{CATEGORIES[category]}</span>
+        <span className="filter__text">{CATEGORIES[category] || category}</span>
     </label>
   )
 };

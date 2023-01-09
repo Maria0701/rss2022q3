@@ -11,7 +11,6 @@ export function Rating({rating}: IRating) {
 
   const getWidth = (rating:number, id:number): string => {
     if (Math.floor(rating / id) >= 1) {
-      
       return '100%';
     } if ((id % rating) > 0 && Math.floor(rating / id) < 1) {
       return `${id % rating * 100}%`;

@@ -34,11 +34,13 @@ export function ProductCard ({product}: IProductProps) {
       </div>
       <div className="product-card__content">
         <div className="product-card__rating"><Rating rating={product.rating} /></div>
+        <span>In Stock {product.stock}</span>
         <p  className="product-card__name">{product.title}</p>
         <span className="product-card__price">{product.price} {SHOP_CURRENCY}</span>
+        
         <Btn eltClass='product-card__btn' onClick={(evt) => detailedCardHandler(evt, product.id)} btnText={"Show details"}/>
       </div>
-      <AddProductToCart id={product.id} text={getCartText} title={product.title} price={product.price}/>
+      <AddProductToCart id={product.id} text={getCartText} title={product.title} price={product.price} stock={product.stock} />
     </div>
 
   )

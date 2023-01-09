@@ -1,11 +1,11 @@
 import { useAppDispatch } from "../../hooks/reducer";
-import { sortProducts } from "../../store/productsSlice";
+import { changeSorting } from "../../store/filterSlice";
 
 export function Sorting () {
   const dispatch = useAppDispatch()
 
   const SortingHandler = (evt: React.ChangeEvent<HTMLSelectElement>) => {
-    dispatch(sortProducts(evt.target.value));
+    dispatch(changeSorting(evt.target.value))
   };
 
   return (

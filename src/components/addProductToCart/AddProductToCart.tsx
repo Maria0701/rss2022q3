@@ -10,10 +10,11 @@ interface IAddToCart {
   id: number,
   text: string,
   title: string,
-  price: number
+  price: number,
+  stock: number,
 }
 
-export function AddProductToCart ({id, text, title, price}: IAddToCart) {
+export function AddProductToCart ({id, text, title, price, stock}: IAddToCart) {
   const dispatch = useAppDispatch();
   const [count, setCount] = useState(1)
 
@@ -22,11 +23,11 @@ export function AddProductToCart ({id, text, title, price}: IAddToCart) {
   };
 
   const increaseCount = (): void => {
-    setCount((el) => el += 1)
+    setCount((el) => el >= stock ? el += 1 : stock)
   };
 
   const onClick= () => {
-    dispatch(addToCart({id: id, count: count}));
+    dispatch(addToCart({id: id, count: count, price: price}));
     dispatch(showModal2({isHidden2: true, count: count, title: title, price: price}));
   }
 

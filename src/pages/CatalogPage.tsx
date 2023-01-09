@@ -7,39 +7,56 @@ import { Catalog } from "../components/catalog/Catalog";
 import { Pagination } from "../components/pagination/Pagination";
 import { BREADCRUMBS_LINKS } from "../jsons/links";
 import { useAppDispatch, useAppSelector } from "../hooks/reducer";
-import { fetchProductsThunkPerPage } from "../store/productsSlice";
-import { changeGoodsPerPage, changePage, getSkipped } from "../store/paginationSlice";
+import { fetchProductsThunkPerPage, paginateFiltered } from "../store/productsSlice";
+import { changeGoodsPerPage, changePage} from "../store/paginationSlice";
 import './catalog-page.css'
+import { skip } from "../hooks/get-lowest-and-highest";
+import { useSearchParams } from "react-router-dom";
+import { ChangeState } from "../components/change-state/change-state";
 
 const POSTS_PER_PAGE = 15;
 
 
 export function CatalogPage() {
 
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
   const products = useAppSelector(state => state.products.products);
+  const isFiltered = useAppSelector(state => state.filter.isFiltered);
   const errorProducts = useAppSelector(state => state.products.error);
   const loading = useAppSelector(state => state.products.loading);
   const totalItems = useAppSelector((state) => state.products.numOfProds);
   const currentPageStored = useAppSelector((state) => state.pagination.currentPage);
-  const postsPerPageStored = useAppSelector((state) => state.pagination.goodsPerPage)
-
-  const skip = (curr:number, perPage: number) => {
-    return (curr - 1) * perPage;
-  }
+  const postsPerPageStored = useAppSelector((state) => state.pagination.goodsPerPage);
+  const activeView = useAppSelector(state => state.products.view);
 
   const paginate = (pageNumber: number) => {
     dispatch(changePage(pageNumber));
-    const toSkip = skip(pageNumber, postsPerPageStored)
-    dispatch(fetchProductsThunkPerPage({limit: postsPerPageStored, skip: toSkip}));
+    const toSkip = skip(pageNumber, postsPerPageStored);
+    
+
+    if (!isFiltered){
+      dispatch(fetchProductsThunkPerPage({limit: postsPerPageStored, skip: toSkip}));
+    }
+
+    if (isFiltered) {
+      dispatch(paginateFiltered({limit: toSkip, skip: postsPerPageStored + toSkip}));
+    }
   };
 
   useEffect(() => {
     dispatch(changeGoodsPerPage(POSTS_PER_PAGE));
-    const toSkip = skip(currentPageStored, postsPerPageStored)
-    dispatch(fetchProductsThunkPerPage({limit: postsPerPageStored, skip: toSkip}));
+    const toSkip = skip(currentPageStored, postsPerPageStored);
+    if (!isFiltered) {
+      dispatch(fetchProductsThunkPerPage({limit: postsPerPageStored, skip: toSkip}));
+    }
+
+    if (isFiltered) {
+      dispatch(paginateFiltered({limit: toSkip, skip: postsPerPageStored + toSkip}));
+    }
   }, [dispatch]);
 
+ 
   const getPageNumText = currentPageStored > 1 ? currentPageStored : '';
   
     return (
@@ -54,9 +71,9 @@ export function CatalogPage() {
         <Filters eltClass="catalog__filters" />
         <div className="catalog__block">
           <div className="catalog__top">
-            <Sorting/>
+            <Sorting/> <ChangeState eltClass="" active={activeView} />
           </div>
-          <Catalog eltClass="catalog__catalog" products={products}/>
+          <Catalog eltClass={`catalog__catalog ${activeView}`} products={products}/>
           <Pagination postsPerPage={postsPerPageStored} totalPosts={totalItems} paginate={paginate} currentPage={currentPageStored}/>
         </div>
       </div>

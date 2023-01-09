@@ -44,8 +44,8 @@ export function CartPage() {
                         {
                             items.map(({id, quantity}) =>(
                                 <tr key={id}>
-                                    <td>{products[id].title}</td>
-                                    <td>{products[id].price}</td>
+                                    <td>{products[id - 1].title}</td>
+                                    <td>{products[id - 1].price}</td>
                                     <td><input 
                                         type="number" 
                                         defaultValue={quantity} 
@@ -53,7 +53,7 @@ export function CartPage() {
                                         className="product__count cart__count"
                                         onBlur={(e) => quantityChangeHandler(e, id)}
                                         /></td>
-                                    <td>{quantity * products[id].price}</td>
+                                    <td>{quantity * products[id - 1].price}</td>
                                     <td><button className="btn cart__btn" onClick={() => removeFromCardFn(id)}>x</button></td>
                                 </tr>
                             ))

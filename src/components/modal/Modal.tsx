@@ -34,13 +34,13 @@ export function Modal () {
                 hideModalHandler();
             }
         }
-        document.addEventListener("mousedown", checkIfClickedOutside)
         const close = (e: KeyboardEvent) => {
             if(e.key === KEY_NAME_ESC) {
                 hideModalHandler()
             }
         }
         window.addEventListener('keydown', close);
+        document.addEventListener("mousedown", checkIfClickedOutside);
 
         return () => {
             document.removeEventListener("mousedown", checkIfClickedOutside)
@@ -69,10 +69,10 @@ export function Modal () {
                             <ImageSlider images={product.images} />
                         </div>
                         <div className="short-prod__content">
-                            <Rating rating={product.rating} />
                             <p className="short-prod__brand">{product.brand}</p>
                             <p className="short-prod__name">{product.title}</p>
                             <p className="short-prod__category">{CATEGORIES[product.category]}</p>
+                            <Rating rating={product.rating} />
                             <p className="short-prod__info">
                                 {product.rating}
                             </p>
@@ -80,7 +80,7 @@ export function Modal () {
                                 <p className="short-prod__price">{product.price} {SHOP_CURRENCY}</p>
                                 <p className="short-prod__discount">{product.discountPercentage}%</p>
                             </div>
-                            <AddProductToCart id={product.id} text={getCartText} title={product.title} price={product.price}/>
+                            <AddProductToCart id={product.id} text={getCartText} title={product.title} price={product.price} stock={product.stock}/>
                             <div className="short-prod__description">{product.description}</div>
                             <p className="short-prod__more" onClick={clickHandler}>MORE...</p>
                         </div>

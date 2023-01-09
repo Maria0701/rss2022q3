@@ -1,9 +1,9 @@
-import { CartItem } from "../store/cartSlice";
+import { ICartItem } from "../store/cartSlice";
 
   
     export type CheckoutResponse = { success: boolean; error?: string };
   
-  export async function checkout(items: CartItem[]): Promise<CheckoutResponse> {
+  export async function checkout(items: ICartItem[]): Promise<CheckoutResponse> {
     const modifier = items.length > 0 ? "success" : "error";
     const url = `/checkout-${modifier}.json`;
     await sleep(500);

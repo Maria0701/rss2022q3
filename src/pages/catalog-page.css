@@ -32,3 +32,17 @@
     flex-basis: calc(100% - 258px - 36px);
     flex-grow: 1;
 }
+
+.catalog__view {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 30px));
+    column-gap: 10px;
+}
+
+.catalog-switcher.active {
+    opacity: 1;
+}
+
+.catalog-switcher {
+    opacity: 0.5;
+}

@@ -1,4 +1,5 @@
 import React, { useEffect} from "react"
+import { useSearchParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from '../../hooks/reducer';
 import { fetchCategoriesThunk } from '../../store/categoriesSlice';
 import { FiltersInput } from './FiltersInput';
@@ -10,7 +11,7 @@ interface IFiltersFieldset {
 
 export function FiltersFieldset({eltClass}: IFiltersFieldset) {
   const dispatch = useAppDispatch();
-
+  const [searchParams, setSearchParams] = useSearchParams();
   const categories = useAppSelector(state => state.categories.categories);
   const loading = useAppSelector(state => state.categories.loading);
   const error = useAppSelector(state => state.categories.error);
@@ -21,6 +22,7 @@ export function FiltersFieldset({eltClass}: IFiltersFieldset) {
   }, [dispatch]);
 
   const isFiltered = (category: string):boolean => {
+    searchParams.set('cat', `${filterCategories.join('_')}`);
     return filterCategories.includes(category) ? true : false;
   }
 

@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState, useRef } from "react";
+import { useSearchParams } from "react-router-dom";
 import { useDebounce } from "../../hooks/deboubce";
 import { useAppDispatch, useAppSelector } from "../../hooks/reducer";
 import { IMinMax } from "../../models/models";
@@ -12,7 +13,7 @@ interface IFiltersSlider {
 }
 
 export function FiltersSliderAvail({eltClass, startInfo, name}: IFiltersSlider) {
-
+    const [searchParams, setSearchParams] = useSearchParams();
     const dispatch = useAppDispatch();
     const filteredMin = useAppSelector(state => state.filter.minAvailable);
     const filteredMax = useAppSelector(state => state.filter.maxAvailable);
@@ -98,6 +99,7 @@ export function FiltersSliderAvail({eltClass, startInfo, name}: IFiltersSlider) 
         setMinInputVal(value)
         minValRef.current = value;
         dispatch(changeMinAvailable(value));
+        searchParams.set('minav', `${value}`);
     };
 
     const maxValHandler = (evt: React.ChangeEvent<HTMLInputElement>) => {
@@ -106,6 +108,7 @@ export function FiltersSliderAvail({eltClass, startInfo, name}: IFiltersSlider) 
         setMaxVal(value);
         maxValRef.current = value;
         dispatch(changeMaxAvailable(value));
+        searchParams.set('maxav', `${value}`);
     };
 
     return (

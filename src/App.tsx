@@ -11,12 +11,13 @@ import { Modal } from './components/modal/Modal';
 import { Modal2 } from './components/modal/Modal2';
 import { changeView, filterByPrice } from './store/productsSlice';
 import { changePage } from './store/paginationSlice';
+import { changeCategoriesArr, changeMaxAvailable, changeMaxPrice, changeMinAvailable, changeMinPrice, changeSorting } from './store/filterSlice';
 
 
 
 function App() {
   const dispatch = useAppDispatch()
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
   const modalIsShown = useAppSelector((state) => state.modal.isHidden);
   const modalIsShown2 = useAppSelector((state) => state.modal2.isHidden2);
@@ -33,22 +34,20 @@ function App() {
 
  
   useEffect(() => {
-    console.log(searchParams.get('cats')?.split('_'));
-    dispatch(filterByPrice({
-        min: Number(searchParams.get('min')), 
-        max: Number(searchParams.get('max')),
-        minAv: Number(searchParams.get('minav')),
-        maxAv: Number(searchParams.get('maxav')),
-        cats: searchParams.get('cats')?.split('_') || [], 
-        direction: searchParams.get('sort') || 'default',
-    }));
-    
-    dispatch(changePage(Number(searchParams.get('page'))));
-    dispatch(changeView(searchParams.get('view') || ''));
+    if (searchParams.entries.length > 0) {
+      const cats = searchParams.get('cats')?.split('_') || [];
+      dispatch(changeMinPrice(Number(searchParams.get('min'))));
+      dispatch(changeMaxPrice(Number(searchParams.get('max'))));
+      cats.forEach((item) => dispatch(changeCategoriesArr(item)));
+      dispatch(changeSorting(searchParams.get('sort') || 'default'));
+      dispatch(changeMaxAvailable(Number(searchParams.get('maxav'))));
+      dispatch(changeMinAvailable(Number(searchParams.get('minav'))));   
+      dispatch(changePage(Number(searchParams.get('page'))));
+      dispatch(changeView(searchParams.get('view') || ''));
+    }
+  },[dispatch]);
 
-  },[]);
-
-  useEffect(() => {
+  /*useEffect(() => {
     setSearchParams(
       createSearchParams({ 
         page: `${currentPage}`, 
@@ -61,7 +60,7 @@ function App() {
         view: view,
       })
     );
-  }, [currentPage, sorting, minFiltered, maxFiltered, categoriesFiltered, view]);
+  }, [currentPage, sorting, minFiltered, maxFiltered, categoriesFiltered, view]);*/
 
   return (
     <>

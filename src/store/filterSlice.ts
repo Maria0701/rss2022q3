@@ -35,6 +35,7 @@ const filterSlice = createSlice({
         },
         changeCategoriesArr(state, action:PayloadAction<string>) {
             const category = action.payload;
+            console.log(category)
             if (state.filterCategories.includes(category)) {
                 state.filterCategories = state.filterCategories.filter(item => item !== category);
             } else {

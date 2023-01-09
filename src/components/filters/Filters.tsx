@@ -48,24 +48,9 @@ export function Filters({eltClass}: IFiltersElt) {
 
     dispatch(filterByPrice({min:filteredMin, max: filteredMax, minAv: filteredAvMin,  maxAv: filteredAvMax, cats: cats, direction: direction}));
     
-    dispatch(changePage(1));
+    /*dispatch(changePage(1));*/
 
     dispatch(paginateFiltered ({limit: 0, skip: postsPerPageStored + toSkip}));
-
-   /* if (isFiltered) {
-      const categoriesFiltered = cats.join('_');
-      setSearchParams (
-        createSearchParams ({ 
-          page: `${currentPageStored}`, 
-          sort: direction, 
-          min: `${filteredMin}`, 
-          max: `${filteredMax}`,
-          minav: `${filteredAvMin}`,
-          maxav: `${filteredAvMax}`,
-          cats: categoriesFiltered,
-        })
-      );
-    }*/
     
   }, [filteredMin, filteredMax, cats, direction, filteredAvMin, filteredAvMax]);
 

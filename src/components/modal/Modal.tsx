@@ -8,6 +8,7 @@ import { fetchSingleProduct } from "../../store/productSlice";
 import { AddProductToCart } from "../addProductToCart/AddProductToCart";
 import { CATEGORIES, KEY_NAME_ESC, SHOP_CURRENCY } from "../../jsons/links";
 import { Rating } from "../stars/stars";
+import { ImageSlider } from "../imageSlider/imageSlider";
 
 export function Modal () {
   const dispatch = useAppDispatch();
@@ -65,11 +66,7 @@ export function Modal () {
                 <div className="short-prod-wrap">
                     <div className="short-prod">
                         <div className="short-prod__gallery">
-                            <div className="short-prod__img">
-                                {product.images.map((img, id) => (
-                                    <div key={id}><img src={img} alt={product.title}/></div>
-                                ))}
-                            </div>
+                            <ImageSlider images={product.images} />
                         </div>
                         <div className="short-prod__content">
                             <p className="short-prod__brand">{product.brand}</p>
